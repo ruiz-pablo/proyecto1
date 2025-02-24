@@ -8,13 +8,17 @@ public class Product {
 	private int iva;
 	private int stock;
 
-	public Product(String name, String description, int price, int iva) {
-		this.id = 0;
+	public Product(int id, String name, String description, int price, int iva, int stock) {
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.iva = iva;
-		this.stock = 0;
+		this.stock = stock;
+	}
+
+	public Product(String name, String description, int price, int iva) {
+		this(0, name, description, price, iva, 0);
 	}
 	
 	public int getId() {
