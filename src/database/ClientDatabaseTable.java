@@ -74,4 +74,23 @@ public class ClientDatabaseTable implements DatabaseTable<Client> {
 
 		return false;
 	}
+
+	@Override
+	public void update(int id, Client values) {
+		if (!exists(id))
+			throw new IllegalArgumentException(String.format("The given id %d does not exists", id));
+
+		Client newClient = new Client(
+				id,
+				values.getName(),
+				values.getNif(),
+				values.getEmail(),
+				values.getAddress(),
+				values.getUncovered(),
+				values.getRe()
+				);
+		
+		// Replace with newClient
+		data.set(indexOf(id), newClient);
+	}
 }
