@@ -6,8 +6,8 @@ import java.util.Collection;
 import model.Client;
 
 public class ClientDatabaseTable implements DatabaseTable<Client> {
+	private int lastId = 0;
 	private ArrayList<Client> data;
-	private static int lastId = 0;
 	
 	public ClientDatabaseTable() {
 		data = new ArrayList<Client>();
