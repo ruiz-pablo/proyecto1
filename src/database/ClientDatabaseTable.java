@@ -1,7 +1,9 @@
-package model;
+package database;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import model.Client;
 
 public class ClientDatabaseTable implements DatabaseTable<Client> {
 	private ArrayList<Client> data;
@@ -15,7 +17,6 @@ public class ClientDatabaseTable implements DatabaseTable<Client> {
 		lastId++;
 		return lastId;
 	}
-
 
 	private int indexOf(int id) {
 		for (int i = 0; i < data.size(); i++) {
@@ -43,7 +44,7 @@ public class ClientDatabaseTable implements DatabaseTable<Client> {
 
 	@Override
 	public void insert(Client client) {
-		// NOTE: The id of the client is ignored
+		// NOTE: The id of the client is manually generated
 		Client toInsert = new Client(
 				newId(),
 				client.getName(),
@@ -61,9 +62,6 @@ public class ClientDatabaseTable implements DatabaseTable<Client> {
 	public void remove(int id) throws IllegalArgumentException {
 		if (!exists(id))
 			throw new IllegalArgumentException(String.format("There is no client in the table with id %d", id));
-
-		if (id == 0)
-			throw new IllegalArgumentException("The id 0 is reserved and is not valid");
 
 		data.remove(indexOf(id));
 	}

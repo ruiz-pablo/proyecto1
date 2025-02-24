@@ -1,7 +1,7 @@
 package controller;
 
+import database.Database;
 import model.Client;
-import model.Database;
 
 public class Main {
 	public static void main(String[] args) {
