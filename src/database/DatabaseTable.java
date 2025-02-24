@@ -9,13 +9,13 @@ public interface DatabaseTable<T> {
 	// Returns an empty Collection if the table has no rows
 	public abstract Collection<T> selectAll();
 	
-	// T.id cannot be duplicated
+	// Inserts 'value' into table ignoring the given T.id and assigning a new one
 	public abstract void insert(T value) throws IllegalArgumentException;
 	
 	// T.id must exists
 	public abstract void remove(int id) throws IllegalArgumentException;
 	
-	// Return true id the given id is present in the table,
+	// Returns true id the given id is present in the table,
 	// otherwise returns false
 	public abstract boolean exists(int id);
 	
