@@ -77,7 +77,7 @@ public class ClientDatabaseTable implements DatabaseTable<Client> {
 
 	@Override
 	public void update(int id, Client client) {
-		if (!exists(id))
+		if (!exists(id) || client == null)
 			throw new IllegalArgumentException(String.format("The given id %d does not exists", id));
 
 		Client newClient = new Client(
