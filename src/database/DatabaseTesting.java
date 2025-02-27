@@ -22,6 +22,8 @@ public class DatabaseTesting {
 		 * the JVM in order to enable asserts
 		 */
 
+		System.out.println("[INFO] Testing...");
+
 		testClients();
 		testProducts();
 		testBills();
