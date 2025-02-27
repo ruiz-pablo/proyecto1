@@ -9,5 +9,8 @@ public class Main {
 
 		// Ejecutar ejemplos de como usar la base de datos
 		DatabaseExamples.runAll();
+		
+		// Ejecutar el menu principal
+		new MenuController().execute();
 	}
 }
