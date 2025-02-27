@@ -1,5 +1,6 @@
 package database;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import model.Client;
@@ -236,7 +237,7 @@ public class DatabaseTesting {
 		// Test update
 		Bill newBill = selectedBill.newInstance();
 		newBill.setClientId(78);
-		newBill.setDate("fecha");
+		newBill.setDate(LocalDate.parse("2025-01-02"));
 		newBill.setAmount(7894387);
 		newBill.setPaid(false);
 		Database.bills.update(newBill);

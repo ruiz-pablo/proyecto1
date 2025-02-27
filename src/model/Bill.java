@@ -1,20 +1,22 @@
 package model;
 
+import java.time.LocalDate;
+
 import database.DatabaseEntity;
 
 public class Bill implements DatabaseEntity<Bill> {
-	private int     id;
-	private int     clientId;
-	private String  date; // TODO: Change to a date format
-	private int     amount;
-	private boolean paid;
+	private int        id;
+	private int        clientId;
+	private LocalDate  date;
+	private int        amount;
+	private boolean    paid;
 	
 	/****************/
 	/* Constructors */
 	/****************/
 
 	// Mostly internal constructor with all fields
-	public Bill(int id, int clientId, String date, int amount, boolean paid) {
+	public Bill(int id, int clientId, LocalDate date, int amount, boolean paid) {
 		this.id = id;
 		this.clientId = clientId;
 		this.date = date;
@@ -24,7 +26,7 @@ public class Bill implements DatabaseEntity<Bill> {
 	
 	// Cut down constructor intended for actual development
 	public Bill(int clientId, int amount, boolean paid) {
-		this(0, clientId, "now", amount, paid); // TODO: Replace 'now' for actual date
+		this(0, clientId, LocalDate.now(), amount, paid); // TODO: Replace 'now' for actual date
 	}
 
 	/***********/
@@ -41,7 +43,7 @@ public class Bill implements DatabaseEntity<Bill> {
 		return clientId;
 	}
 
-	public String getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
@@ -71,7 +73,7 @@ public class Bill implements DatabaseEntity<Bill> {
 		this.clientId = clientId;
 	}
 
-	public void setDate(String date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
