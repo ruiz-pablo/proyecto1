@@ -1,8 +1,8 @@
 package model;
 
-import database.DatabaseTableEntity;
+import database.DatabaseEntity;
 
-public class Bill implements DatabaseTableEntity<Bill> {
+public class Bill implements DatabaseEntity<Bill> {
 	private int     id;
 	private int     clientId;
 	private String  date; // TODO: Change to a date format
@@ -31,7 +31,7 @@ public class Bill implements DatabaseTableEntity<Bill> {
 	/* Getters */
 	/***********/
 
-	// NOTE: Required by DatabaseTableEntity
+	// NOTE: Required by DatabaseEntity
 	@Override
 	public int getId() {
 		return id;
@@ -57,7 +57,7 @@ public class Bill implements DatabaseTableEntity<Bill> {
 	/* Setters */
 	/***********/
 
-	// NOTE: Required by DatabaseTableEntity
+	// NOTE: Required by DatabaseEntity
 	@Override
 	public void setId(int id) {
 		this.id = id;
@@ -85,7 +85,7 @@ public class Bill implements DatabaseTableEntity<Bill> {
 	
 	/*
 	 * Returns a new instance of itself,
-	 * required by DatabaseTableEntity
+	 * required by DatabaseEntity
 	 */
 	@Override
 	public Bill newInstance() {

@@ -1,8 +1,8 @@
 package model;
 
-import database.DatabaseTableEntity;
+import database.DatabaseEntity;
 
-public class SoldProduct implements DatabaseTableEntity<SoldProduct> {
+public class SoldProduct implements DatabaseEntity<SoldProduct> {
 	private int id;
 	private int billId;
 	private int productId;
@@ -29,7 +29,7 @@ public class SoldProduct implements DatabaseTableEntity<SoldProduct> {
 	/* Getters */
 	/***********/
 
-	// NOTE: Required by DatabaseTableEntity
+	// NOTE: Required by DatabaseEntity
 	@Override
 	public int getId() {
 		return this.id;
@@ -51,7 +51,7 @@ public class SoldProduct implements DatabaseTableEntity<SoldProduct> {
 	/* Setters */
 	/***********/
 
-	// NOTE: Required by DatabaseTableEntity
+	// NOTE: Required by DatabaseEntity
 	@Override
 	public void setId(int id) {
 		this.id = id;
@@ -75,7 +75,7 @@ public class SoldProduct implements DatabaseTableEntity<SoldProduct> {
 
 	/*
 	 * Returns a new instance of itself,
-	 * required by DatabaseTableEntity
+	 * required by DatabaseEntity
 	 */
 	@Override
 	public SoldProduct newInstance() {

@@ -1,8 +1,8 @@
 package model;
 
-import database.DatabaseTableEntity;
+import database.DatabaseEntity;
 
-public class Client implements DatabaseTableEntity<Client> {
+public class Client implements DatabaseEntity<Client> {
 	private int     id;
 	private String  name;
 	private String  nif;
@@ -35,7 +35,7 @@ public class Client implements DatabaseTableEntity<Client> {
 	/* Getters */
 	/***********/
 
-	// NOTE: Required by DatabaseTableEntity
+	// NOTE: Required by DatabaseEntity
 	@Override
 	public int getId() {
 	    return this.id;
@@ -69,7 +69,7 @@ public class Client implements DatabaseTableEntity<Client> {
 	/* Setters */
 	/***********/
 
-	// NOTE: Required by DatabaseTableEntity
+	// NOTE: Required by DatabaseEntity
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -104,7 +104,7 @@ public class Client implements DatabaseTableEntity<Client> {
 
 	/*
 	 * Returns a new instance of itself,
-	 * required by DatabaseTableEntity
+	 * required by DatabaseEntity
 	 */
 	@Override
 	public Client newInstance() {

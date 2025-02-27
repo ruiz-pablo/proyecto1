@@ -3,7 +3,7 @@ package database;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class AbstractDatabaseTable<T extends DatabaseTableEntity<T>> {
+public class AbstractDatabaseTable<T extends DatabaseEntity<T>> {
 	private int lastId = 0;
 	private ArrayList<T> data;
 
