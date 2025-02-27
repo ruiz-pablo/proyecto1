@@ -29,13 +29,15 @@ public class AbstractDatabaseTable<T extends DatabaseTableEntity<T>> {
 		data = new ArrayList<T>();
 	}
 
-	public void insert(T entity) throws IllegalArgumentException {
+	public int insert(T entity) throws IllegalArgumentException {
 		if (entity == null)
 			throw new IllegalArgumentException("entity is null");
 		
 		T clone = getClone(entity);
-		clone.setId(newId());
+		int id = newId();
+		clone.setId(id);
 		data.add(clone);
+		return id;
 	}
 	
 	public T select(int id) {
