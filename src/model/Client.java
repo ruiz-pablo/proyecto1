@@ -1,14 +1,21 @@
 package model;
 
-public class Client {
-	private int id;
-	private String name;
-	private String nif;
-	private String email;
-	private String address;
-	private int uncovered;
-	private boolean re;
+import database.DatabaseTableEntity;
 
+public class Client implements DatabaseTableEntity<Client> {
+	private int     id;
+	private String  name;
+	private String  nif;
+	private String  email;
+	private String  address;
+	private int     uncovered;
+	private boolean re;
+	
+	/***************/
+	/* Constructor */
+	/***************/
+
+	// Mostly internal constructor with all fields
 	public Client(int id, String name, String nif, String email, String address, int uncovered, boolean re) {
 		this.id = id;
 		this.name = name;
@@ -19,10 +26,17 @@ public class Client {
 		this.re = re;
 	}
 
+	// Cut down constructor intended for actual development
 	public Client(String name, String nif, String email, String address, boolean re) {
 		this(0, name, nif, email, address, 0, re);
 	}
-	
+
+	/***********/
+	/* Getters */
+	/***********/
+
+	// NOTE: Required by DatabaseTableEntity
+	@Override
 	public int getId() {
 	    return this.id;
 	}
@@ -51,9 +65,62 @@ public class Client {
 	    return this.re;
 	}
 
+	/***********/
+	/* Setters */
+	/***********/
+
+	// NOTE: Required by DatabaseTableEntity
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setNif(String nif) {
+		this.nif = nif;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setUncovered(int uncovered) {
+		this.uncovered = uncovered;
+	}
+
+	public void setRe(boolean re) {
+		this.re = re;
+	}
+
+	/*****************/
+	/* Other methods */
+	/*****************/
+
+	/*
+	 * Returns a new instance of itself,
+	 * required by DatabaseTableEntity
+	 */
+	@Override
+	public Client newInstance() {
+		return new Client(
+				getId(),
+				getName(),
+				getNif(),
+				getEmail(),
+				getAddress(),
+				getUncovered(),
+				getRe()
+				);
+	}
+
 	@Override
 	public String toString() {
-		return "Client [id=" + id + ", name=" + name + ", nif=" + nif + ", email=" + email + ", address=" + address
-				+ ", uncovered=" + uncovered + ", re=" + re + "]";
+		return "Client [id=" + id + ", name=" + name + ", nif=" + nif + ", email=" + email + ", address=" + address + ", uncovered=" + uncovered + ", re=" + re + "]";
 	}
 }
