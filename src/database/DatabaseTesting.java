@@ -260,12 +260,12 @@ public class DatabaseTesting {
 	/* Testing code for soldProducts */
 	/*********************************/
 	/*
-	 * [ ] select
-	 * [ ] selectAll
-	 * [ ] insert
-	 * [ ] remove
-	 * [ ] exists
-	 * [ ] update
+	 * [x] select
+	 * [x] selectAll
+	 * [x] insert
+	 * [x] remove
+	 * [x] exists
+	 * [x] update
 	 */
 	public static void testSoldProducts() {
 		assert Database.soldProducts.selectAll().size() == 0;
