@@ -6,7 +6,7 @@ public class Product implements DatabaseTableEntity<Product> {
 	private int    id;
 	private String name;
 	private String description;
-	private int    price;
+	private int    price; // ATENCION: El precio de un producto se almacena en centimos, para evitar errores de redondeo
 	private int    iva;
 	private int    stock;
 	
