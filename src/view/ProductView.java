@@ -1,6 +1,8 @@
 package view;
 
-public class ProductView extends AbstractView {
+import model.Product;
+
+public class ProductView extends AbstractView<Product> {
 
 	@Override
 	public void list() {
@@ -9,20 +11,23 @@ public class ProductView extends AbstractView {
 	}
 
 	@Override
-	public void create() {
+	public Product create() {
 		// TODO Auto-generated method stub
+		return null;
 
 	}
 
 	@Override
-	public void remove() {
+	public int remove() {
 		// TODO Auto-generated method stub
+		return 0;
 
 	}
 
 	@Override
-	public void modify() {
+	public Product modify() {
 		// TODO Auto-generated method stub
+		return null;
 
 	}
 

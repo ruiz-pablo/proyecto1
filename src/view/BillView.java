@@ -1,28 +1,29 @@
 package view;
 
-public class BillView extends AbstractView {
+import model.Bill;
+
+public class BillView extends AbstractView<Bill> {
 
 	@Override
 	public void list() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
-	public void create() {
+	public Bill create() {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void remove() {
+	public int remove() {
 		// Do not implement, it is not going to be used
+		return 0;
 	}
 
 	@Override
-	public void modify() {
+	public Bill modify() {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
-
 }

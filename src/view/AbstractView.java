@@ -1,11 +1,11 @@
 package view;
 
-public abstract class AbstractView {
+public abstract class AbstractView<T> {
 	public abstract void list();
 
-	public abstract void create();
+	public abstract T create();
 	
-	public abstract void remove();
+	public abstract int remove();
 	
-	public abstract void modify();
+	public abstract T modify();
 }

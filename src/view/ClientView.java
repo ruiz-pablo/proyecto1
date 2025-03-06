@@ -1,6 +1,8 @@
 package view;
 
-public class ClientView extends AbstractView {
+import model.Client;
+
+public class ClientView extends AbstractView<Client> {
 
 	@Override
 	public void list() {
@@ -9,20 +11,21 @@ public class ClientView extends AbstractView {
 	}
 
 	@Override
-	public void create() {
+	public Client create() {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	public void remove() {
+	public int remove() {
 		// TODO Auto-generated method stub
-		
+		return 0;
 	}
 
 	@Override
-	public void modify() {
+	public Client modify() {
 		// TODO Auto-generated method stub
+		return null;
 		
 	}
 
