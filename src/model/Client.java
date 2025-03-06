@@ -1,6 +1,6 @@
 package model;
 
-import database.DatabaseEntity;
+import model.database.DatabaseEntity;
 
 public class Client implements DatabaseEntity<Client> {
 	private int     id;

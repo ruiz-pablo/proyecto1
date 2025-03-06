@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDate;
 
-import database.DatabaseEntity;
+import model.database.DatabaseEntity;
 
 public class Bill implements DatabaseEntity<Bill> {
 	private int        id;

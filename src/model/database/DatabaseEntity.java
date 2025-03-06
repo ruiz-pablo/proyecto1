@@ -1,4 +1,4 @@
-package database;
+package model.database;
 
 public interface DatabaseEntity<T> {
 

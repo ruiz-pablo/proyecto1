@@ -1,4 +1,4 @@
-package database;
+package model.database;
 
 import model.Bill;
 import model.Client;

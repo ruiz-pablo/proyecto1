@@ -1,7 +1,7 @@
 package controller;
 
-import database.DatabaseExamples;
-import database.DatabaseTesting;
+import model.database.DatabaseExamples;
+import model.database.DatabaseTesting;
 
 public class Main {
 	public static void main(String[] args) {
