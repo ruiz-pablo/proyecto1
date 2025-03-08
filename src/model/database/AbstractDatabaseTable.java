@@ -5,14 +5,18 @@ import java.util.Collection;
 
 public class AbstractDatabaseTable<T extends DatabaseEntity<T>> {
 	private int lastId = 0;
-	private ArrayList<T> data;
+	protected ArrayList<T> data;
 
-	private int newId() {
+	public AbstractDatabaseTable() {
+		data = new ArrayList<T>();
+	}
+
+	protected int newId() {
 		lastId++;
 		return lastId;
 	}
 	
-	private int indexOf(int id) {
+	protected int indexOf(int id) {
 		for (int i = 0; i < data.size(); i++) {
 			if (data.get(i).getId() == id)
 				return i;
@@ -21,12 +25,8 @@ public class AbstractDatabaseTable<T extends DatabaseEntity<T>> {
 		return -1;
 	}
 
-	private T getClone(T entity) {
+	protected T getClone(T entity) {
 		return entity.newInstance();
-	}
-
-	public AbstractDatabaseTable() {
-		data = new ArrayList<T>();
 	}
 
 	public int insert(T entity) throws IllegalArgumentException {
