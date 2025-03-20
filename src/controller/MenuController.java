@@ -110,7 +110,7 @@ public class MenuController {
                 break;
             case 3:
                 System.out.println("-- Has seleccionado listar facturas. --");
-                billController.remove();
+                billController.list();
                 break;
         }
     }
