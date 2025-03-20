@@ -1,17 +1,122 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import model.Bill;
+import model.Client;
+import model.Product;
+import model.SoldProduct;
+import model.database.Database;
+import view.BillView;
+import view.Input;
+
 public class BillController extends AbstractController {
+	private static final int RE_PERCENTAGE = 3;
+
+	private BillView view;
+
+	public BillController() {
+		this.view = new BillView();
+	}
 
 	@Override
 	public void list() {
-		// TODO Auto-generated method stub
-		
+		do {
+			try {
+				// Read bill id to print from user
+				int billId = view.list();
+				
+				// Print bill
+				view.printBillDetails(billId);
+			}
+			catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		while (Input.readYesNo("Desea imprimir otra factura? (y/n)"));
 	}
 
 	@Override
 	public void create() {
-		// TODO Auto-generated method stub
+		do {
+			try {
+				Object[] values =  view.create2();
+				Client client = (Client) values[0];
+				HashMap<Integer, Integer> productMap = (HashMap<Integer, Integer>) values[1];
+				boolean printBill = (boolean) values[2];
+				
+				// Create bill
+				int billId = createBillMethod(client, productMap);
+				
+				// Print bill
+				if (printBill)
+					view.printBillDetails(billId);
+
+			} catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		while (Input.readYesNo("Desea emitir otra factura? (y/n): "));
+	}
+
+	private int createBillMethod(Client client, HashMap<Integer, Integer> productMap) {
+		// Create bill
+		Bill bill = new Bill(
+				client.getId(), // Id of the client
+				0,              // Set amount temporally to 0, it will be updated later
+				false           // Set paid to false by default
+				);
 		
+		int billId = Database.bills.insert(bill); // Insert bill into table to get Id
+		bill = Database.bills.select(billId);     // Update bill with new information
+
+		// Convert map with product-amount values to SoldProduct objects
+		ArrayList<SoldProduct> soldProducts = new ArrayList<SoldProduct>();
+		for (Integer key : productMap.keySet()) {
+			SoldProduct soldProduct = new SoldProduct(
+					billId,
+					key,
+					productMap.get(key)
+					);
+			soldProducts.add(soldProduct);
+		}
+
+		// Insert SoldProduct objects into database
+		for (SoldProduct p : soldProducts)
+			Database.soldProducts.insert(p);
+		
+		// Update total amount of the bill
+		int amount = calculateAmountBill(billId);
+		bill.setAmount(amount);
+		Database.bills.update(bill);
+		
+		// Increase client's uncovered
+		increaseUncovered(client.getId(), billId);
+
+		return bill.getId();
+	}
+
+	private int calculateAmountBill(int billId) {
+		Bill bill = Database.bills.select(billId);
+		
+		int importe = 0;
+		int iva = 0;
+		int re_amount = 0;
+
+		// Add up importe and IVA
+		for (SoldProduct soldProduct : (ArrayList<SoldProduct>) Database.soldProducts.selectByBillId(billId)) {
+			Product product = Database.products.select(soldProduct.getProductId());
+			
+			importe += product.getPrice() * soldProduct.getAmount();
+			iva += (int) Math.round((importe * product.getIva()) / 100.0);
+		}
+		
+		// Calculate up RE quote
+		if (Database.clients.select(bill.getClientId()).getRe())
+			re_amount = (int) Math.round((importe * RE_PERCENTAGE) / 100.0);
+		
+		return importe + iva + re_amount;
 	}
 
 	@Override
@@ -21,8 +126,44 @@ public class BillController extends AbstractController {
 
 	@Override
 	public void modify() {
-		// TODO Auto-generated method stub
-		
+		do {
+			try {
+				// Read bill id from user
+				int billId = view.modify();
+				Bill bill = Database.bills.select(billId);
+
+				// Mark as paid
+				markBillAsPaid(bill.getId());
+				
+				// Decrease client's uncovered
+				decreaseUncovered(bill.getClientId(), bill.getAmount());
+			} catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		while (Input.readYesNo("Desea marcar otra factura como pagada? (y/n): "));
 	}
 
+	private void markBillAsPaid(int billId) {
+		// Mark bill as paid
+		Bill bill = Database.bills.select(billId);
+		bill.setPaid(true);
+		Database.bills.update(bill);
+		
+		// Update client's uncovered
+	}
+
+	private void increaseUncovered(int clientId, int amount) {
+		Client client = Database.clients.select(clientId);
+		int newUncovered = client.getUncovered();
+		newUncovered += amount;
+		client.setUncovered(newUncovered);
+	}
+
+	private void decreaseUncovered(int clientId, int amount) {
+		Client client = Database.clients.select(clientId);
+		int newUncovered = client.getUncovered();
+		newUncovered -= amount;
+		client.setUncovered(newUncovered);
+	}
 }

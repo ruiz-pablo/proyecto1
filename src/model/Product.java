@@ -29,6 +29,11 @@ public class Product implements DatabaseEntity<Product> {
 		this(0, name, description, price, iva, 0);
 	}
 
+	// Same, but with stock
+	public Product(String name, String description, int price, int iva, int stock) {
+		this(0, name, description, price, iva, stock);
+	}
+
 	/***********/
 	/* Getters */
 	/***********/

@@ -48,7 +48,7 @@ public class DatabaseTesting {
 		assert Database.clients.selectAll().size() == 0;
 
 		ArrayList<Client>clients = new ArrayList<Client>();
-		clients.add(new Client("Fruteria Pepe S.L.", "12312312A", "contacto@fruteriapepe.com", "Calle Mayor 12, Madrid", false));
+		clients.add(new Client("Fruteria Pepe S.L.", "12312312A", "contacto@fruteriapepe.com", "Calle Mayor 12, Madrid", true));
 		clients.add(new Client("Supermercado El Barato", "98765432B", "info@elbarato.com", "Avenida de la Constitución 34, Barcelona", true));
 		clients.add(new Client("Restaurante La Estrella", "76543210C", "reservas@laestrella.com", "Calle de la Luna 56, Valencia", false));
 		clients.add(new Client("Fruteria La Huerta", "54321098D", "fruteria@lahuerta.com", "Calle de la Huerta 23, Sevilla", true));
@@ -121,21 +121,21 @@ public class DatabaseTesting {
 		assert Database.products.selectAll().size() == 0;
 
 		ArrayList<Product> products = new ArrayList<Product>();
-		products.add(new Product("Manzana Granny Smith", "manzana verde y ácida", 120, 10));
-		products.add(new Product("Plátano", "plátano maduro y dulce", 80, 10));
-		products.add(new Product("Naranja Valencia", "naranja jugosa y dulce", 100, 10));
-		products.add(new Product("Fresa", "fresa fresca y dulce", 150, 10));
-		products.add(new Product("Pera", "pera madura y suave", 140, 10));
-		products.add(new Product("Uva Red Globe", "uva roja y dulce", 200, 10));
-		products.add(new Product("Kiwi", "kiwi verde y peludo", 180, 10));
-		products.add(new Product("Mango Alphonso", "mango maduro y dulce", 250, 10));
-		products.add(new Product("Peach", "melocotón maduro y jugoso", 220, 10));
-		products.add(new Product("Pera Bartlett", "pera madura y suave", 160, 10));
-		products.add(new Product("Nectarina", "nectarina madura y dulce", 200, 10));
-		products.add(new Product("Ciruela Santa Rosa", "ciruela madura y dulce", 180, 10));
-		products.add(new Product("Frutilla", "frutilla fresca y dulce", 120, 10));
-		products.add(new Product("Limon", "limón verde y ácido", 100, 10));
-		products.add(new Product("Naranja Sanguina", "naranja jugosa y dulce", 120, 10));
+		products.add(new Product("Manzana Granny Smith", "manzana verde y ácida", 120, 10, 5));
+		products.add(new Product("Plátano", "plátano maduro y dulce", 80, 10, 12));
+		products.add(new Product("Naranja Valencia", "naranja jugosa y dulce", 100, 10, 5));
+		products.add(new Product("Fresa", "fresa fresca y dulce", 150, 10, 3));
+		products.add(new Product("Pera", "pera madura y suave", 140, 10, 9));
+		products.add(new Product("Uva Red Globe", "uva roja y dulce", 200, 10, 0));
+		products.add(new Product("Kiwi", "kiwi verde y peludo", 180, 10, 45));
+		products.add(new Product("Mango Alphonso", "mango maduro y dulce", 250, 10, 4));
+		products.add(new Product("Peach", "melocotón maduro y jugoso", 220, 10, 32));
+		products.add(new Product("Pera Bartlett", "pera madura y suave", 160, 10, 12));
+		products.add(new Product("Nectarina", "nectarina madura y dulce", 200, 10, 2));
+		products.add(new Product("Ciruela Santa Rosa", "ciruela madura y dulce", 180, 10, 5));
+		products.add(new Product("Frutilla", "frutilla fresca y dulce", 120, 10, 2));
+		products.add(new Product("Limon", "limón verde y ácido", 100, 10, 98));
+		products.add(new Product("Naranja Sanguina", "naranja jugosa y dulce", 120, 10, 4));
 		
 		// Test insert
 		for (Product p : products)
