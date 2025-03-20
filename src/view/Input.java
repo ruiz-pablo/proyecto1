@@ -83,7 +83,7 @@ public class Input {
 		System.out.print(msg);
 		String line = Input.readLine();
 		
-		while (!line.equals("y") && !line.equals("n")) {
+		while (!line.equals("s") && !line.equals("n")) {
 			System.out.println("Opcion no reconocida");
 			System.out.print(msg);
 			line = Input.readLine();

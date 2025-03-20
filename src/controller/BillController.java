@@ -34,7 +34,7 @@ public class BillController extends AbstractController {
 				System.out.println(e.getMessage());
 			}
 		}
-		while (Input.readYesNo("Desea imprimir otra factura? (y/n)"));
+		while (Input.readYesNo("Desea imprimir otra factura? (s/n)"));
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class BillController extends AbstractController {
 				System.out.println(e.getMessage());
 			}
 		}
-		while (Input.readYesNo("Desea emitir otra factura? (y/n): "));
+		while (Input.readYesNo("Desea emitir otra factura? (s/n): "));
 	}
 
 	private int createBillMethod(Client client, HashMap<Integer, Integer> productMap) {
@@ -142,7 +142,7 @@ public class BillController extends AbstractController {
 				System.out.println(e.getMessage());
 			}
 		}
-		while (Input.readYesNo("Desea marcar otra factura como pagada? (y/n): "));
+		while (Input.readYesNo("Desea marcar otra factura como pagada? (s/n): "));
 	}
 
 	private void markBillAsPaid(int billId) {

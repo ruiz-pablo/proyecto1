@@ -43,7 +43,7 @@ public class MenuController {
                     return;
             }
 
-			exec = Input.readYesNo("¿Quieres continuar con el programa? (s/n)");
+			exec = Input.readYesNo("¿Quieres continuar con el programa? (s/n): ");
         }
     }
 

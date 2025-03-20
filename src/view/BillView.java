@@ -44,7 +44,7 @@ public class BillView {
 			throw new IllegalArgumentException("No existe la factura introducida");
 		
 		// User confirmation
-		if (!Input.readYesNo("Marcar factura como pagada? (y/n): "))
+		if (!Input.readYesNo("Marcar factura como pagada? (s/n): "))
 			throw new IllegalArgumentException("Cancelando operacion");
 
 		System.out.println("Se ha marcado la factura como pagada");
@@ -88,7 +88,7 @@ public class BillView {
 						System.out.println("No se puede añadir el producto. La cantidad del producto introducida supera la cantidad en stock");
 				}
 				
-				continueAdding = Input.readYesNo("Desea añadir otro producto? (y/n): ");
+				continueAdding = Input.readYesNo("Desea añadir otro producto? (s/n): ");
 			} while (continueAdding);
 			
 
@@ -97,7 +97,7 @@ public class BillView {
 				throw new IllegalArgumentException("No se ha seleccionado ningun producto");
 			
 			// Ask where to print the bill or not
-			boolean printBill = Input.readYesNo("Desea imprimir la factura (y/n): ");
+			boolean printBill = Input.readYesNo("Desea imprimir la factura (s/n): ");
 
 			// Return all values needed to create the bill to the controller
 			return new Object[] {client, productMap, printBill};
