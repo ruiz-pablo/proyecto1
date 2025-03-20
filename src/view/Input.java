@@ -46,6 +46,26 @@ public class Input {
 		return true;
 	}
 
+    public static int readOption(int min, int max) {
+        int selectedOptionNumber = 0;
+        boolean validInput = false;
+
+        while (!validInput) {
+            try {
+                String selectedOption = Input.readLine();
+                selectedOptionNumber = Integer.parseInt(selectedOption);
+                if (selectedOptionNumber >= min && selectedOptionNumber <= max) {
+                    validInput = true;
+                } else {
+                    System.out.println("El número debe estar entre " + min + " y " + max + ". Intenta de nuevo:");
+                }
+            } catch (NumberFormatException e) {
+                System.out.print("Ingresa solo números válidos. Intentalo de nuevo: ");
+            }
+        }
+        return selectedOptionNumber;
+    }
+
 	public static String readCif(String msg) {
 		System.out.print(msg);
 		String cif = Input.readLine();

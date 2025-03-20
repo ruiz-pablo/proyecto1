@@ -43,6 +43,7 @@ public class BillController extends AbstractController {
 			try {
 				Object[] values =  view.create2();
 				Client client = (Client) values[0];
+				@SuppressWarnings("unchecked")
 				HashMap<Integer, Integer> productMap = (HashMap<Integer, Integer>) values[1];
 				boolean printBill = (boolean) values[2];
 				

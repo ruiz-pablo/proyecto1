@@ -21,7 +21,7 @@ public class BillView {
 			row[0] = String.valueOf(bill.getId());
 			row[1] = client == null ? "None" : client.getName();
 			row[2] = String.valueOf(bill.getDate());
-			row[3] = String.format("%.2f", bill.getAmount() / 100.0) + "€";
+			row[3] = String.format("%.2f€", bill.getAmount() / 100.0);
 			row[4] = String.valueOf(bill.isPaid() ? "Si" : "No");
 			data.add(row);
 		}

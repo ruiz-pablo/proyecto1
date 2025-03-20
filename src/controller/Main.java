@@ -13,7 +13,7 @@ public class Main {
 		// Ejecutar el menu principal
 		// new MenuController().execute();
 		
-		BillController billController = new BillController();
-		billController.create();
+		MenuController menuController = new MenuController();
+		menuController.execute();
 	}
 }
