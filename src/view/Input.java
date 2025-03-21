@@ -157,50 +157,48 @@ public class Input {
 
 		return amount;
 	}
-	
+
 	public static int readPrice(String msg) {
 		int price = 0;
 		boolean isValid = false;
 
 		while (!isValid) {
-			System.out.print(msg);
-			Scanner scanner = new Scanner(readLine());
-			
-			if (scanner.hasNextFloat()) {
-				price = (int) Math.round(scanner.nextFloat() * 100.0); // Convert to cents
-				if (price >= 0)
-					isValid = true;
-			}
-			
-			if (!isValid)
-				System.out.println("El precio introducido no es valido");
+			try {
+				System.out.print(msg);
+				price = (int) Math.round(Float.parseFloat(Input.readLine()) * 100.0);
+				if (price < 0)
+					throw new NumberFormatException("Price is lower than 0");
 
-			scanner.close();
+				isValid = true;
+			}
+			catch (NumberFormatException e) {
+				System.out.println("El precio introducido no es valido");
+			}
 		}
-		
+
 		return price;
 	}
-	
+
 	public static int readPercentage(String msg) {
 		int percentage = 0;
 		boolean isValid = false;
 
 		while (!isValid) {
-			System.out.print(msg);
-			Scanner scanner = new Scanner(readLine());
-			
-			if (scanner.hasNextInt()) {
-				percentage = scanner.nextInt();
-				if (percentage >= 0 && percentage <= 100)
-					isValid = true;
-			}
-			
-			if (!isValid)
-				System.out.println("El porcentaje introducido no es valido");
+			try {
+				System.out.print(msg);
+				percentage = Integer.parseInt(Input.readLine());
+				if (percentage < 0)
+					throw new NumberFormatException("Percentage is lower than 0");
+				if (percentage > 100)
+					throw new NumberFormatException("Percentage is higher than 100");
 
-			scanner.close();
+				isValid = true;
+			}
+			catch (NumberFormatException e) {
+				System.out.println("El porcentaje introducido no es valido");
+			}
 		}
-		
+
 		return percentage;
 	}
 	
