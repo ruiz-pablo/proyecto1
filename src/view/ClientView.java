@@ -20,7 +20,6 @@ public class ClientView extends AbstractView<Client> {
 		String[] columns = new String[] {"Código", "Nombre", "CIF", "Email", "Dirección", "RE", "Descubierto"};
 		ArrayList<String[]> data = new ArrayList<String[]>();
 
-		// Change to ArrayList
 		for (Client client : clients) {
 			ArrayList<String> row = new ArrayList<String>();
 
