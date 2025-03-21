@@ -49,15 +49,15 @@ public class DatabaseTesting {
 
 		ArrayList<Client>clients = new ArrayList<Client>();
 		clients.add(new Client("Fruteria Pepe S.L.", "A1231231A", "contacto@fruteriapepe.com", "Calle Mayor 12, Madrid", true));
-		clients.add(new Client("Supermercado El Barato", "98765432B", "info@elbarato.com", "Avenida de la Constitución 34, Barcelona", true));
-		clients.add(new Client("Restaurante La Estrella", "76543210C", "reservas@laestrella.com", "Calle de la Luna 56, Valencia", false));
-		clients.add(new Client("Fruteria La Huerta", "54321098D", "fruteria@lahuerta.com", "Calle de la Huerta 23, Sevilla", true));
-		clients.add(new Client("Mercado de San Miguel", "32109876E", "info@mercadodesanmiguel.com", "Plaza de San Miguel 1, Madrid", false));
-		clients.add(new Client("Tienda de Productos Ecológicos", "87654321F", "ecologico@tienda.com", "Calle de la Tierra 45, Granada", true));
-		clients.add(new Client("Hotel La Casa Grande", "65432109G", "reservas@lacasa-grande.com", "Avenida de la Playa 123, Málaga", false));
-		clients.add(new Client("Fruteria El Jardín", "43210987H", "fruteria@eljardin.com", "Calle del Jardín 67, Alicante", true));
-		clients.add(new Client("Supermercado La Unión", "32109876I", "info@launion.com", "Avenida de la Unión 90, Zaragoza", false));
-		clients.add(new Client("Restaurante La Casa de Toño", "98765432J", "reservas@lacasadetono.com", "Calle de la Casa 34, Córdoba", true));
+		clients.add(new Client("Supermercado El Barato", "B28250777", "info@elbarato.com", "Avenida de la Constitución 34, Barcelona", true));
+		clients.add(new Client("Restaurante La Estrella", "E05594270", "reservas@laestrella.com", "Calle de la Luna 56, Valencia", false));
+		clients.add(new Client("Fruteria La Huerta", "Q3666951C", "fruteria@lahuerta.com", "Calle de la Huerta 23, Sevilla", true));
+		clients.add(new Client("Mercado de San Miguel", "A77284222", "info@mercadodesanmiguel.com", "Plaza de San Miguel 1, Madrid", false));
+		clients.add(new Client("Tienda de Productos Ecológicos", "S6257688I", "ecologico@tienda.com", "Calle de la Tierra 45, Granada", true));
+		clients.add(new Client("Hotel La Casa Grande", "R7978189D", "reservas@lacasa-grande.com", "Avenida de la Playa 123, Málaga", false));
+		clients.add(new Client("Fruteria El Jardín", "F68561463", "fruteria@eljardin.com", "Calle del Jardín 67, Alicante", true));
+		clients.add(new Client("Supermercado La Unión", "U37943438", "info@launion.com", "Avenida de la Unión 90, Zaragoza", false));
+		clients.add(new Client("Restaurante La Casa de Toño", "R6558898J", "reservas@lacasadetono.com", "Calle de la Casa 34, Córdoba", true));
 		
 		// Test insert
 		for (Client c : clients)

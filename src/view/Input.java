@@ -15,7 +15,7 @@ public class Input {
 	
 	// TODO: Properly validate first and last letter
 	private static boolean isCifValid(String cif) {
-		final String validLetters = "ABCDEFGHJNPQS";
+		final String validLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 		if (cif.length() != 9)
 			return false;
@@ -25,13 +25,13 @@ public class Input {
 		if (!validLetters.contains(firstLetter))
 			return false;
 
-		// Check last letter
-		String lastLetter = cif.substring(8, 9);
-		if (!validLetters.contains(lastLetter))
+		// Check last letter / digit
+		char lastLetter = cif.charAt(8);
+		if (!Character.isDigit(lastLetter) && !Character.isLetter(lastLetter))
 			return false;
 		
 		// Check number part
-		Scanner scanner = new Scanner(cif.substring(1, 8));
+		Scanner scanner = new Scanner(cif.substring(1, 7));
 		if (!scanner.hasNextInt()) {
 			scanner.close();
 			return false;
