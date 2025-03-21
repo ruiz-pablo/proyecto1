@@ -82,7 +82,7 @@ public class DatabaseTesting {
 		// Test update
 		Client newClient = selectedClient.newInstance();
 		newClient.setName("nombre");
-		newClient.setNif("nif");
+		newClient.setCif("nif");
 		newClient.setEmail("email");
 		newClient.setAddress("direccion");
 		newClient.setUncovered(123);
@@ -95,7 +95,7 @@ public class DatabaseTesting {
 		
 		// Check that all parameters are equal
 		assert selectedClient.getName().equals(newClient.getName());
-		assert selectedClient.getNif().equals(newClient.getNif());
+		assert selectedClient.getCif().equals(newClient.getCif());
 		assert selectedClient.getEmail().equals(newClient.getEmail());
 		assert selectedClient.getAddress().equals(newClient.getAddress());
 		assert selectedClient.getUncovered() == newClient.getUncovered();

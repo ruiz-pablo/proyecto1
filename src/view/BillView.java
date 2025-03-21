@@ -150,7 +150,7 @@ public class BillView {
 		System.out.println("===========");
 		System.out.println("Id cliente: " + client.getId());
 		System.out.println("Nombre: " + client.getName());
-		System.out.println("CIF: " + client.getNif());
+		System.out.println("CIF: " + client.getCif());
 		System.out.println("Recago equivalencia: " + (client.getRe() ? "Si" : "No"));
 		System.out.println();
 		

@@ -5,7 +5,7 @@ import model.database.DatabaseEntity;
 public class Client implements DatabaseEntity<Client> {
 	private int     id;
 	private String  name;
-	private String  nif;
+	private String  cif;
 	private String  email;
 	private String  address;
 	private int     uncovered;
@@ -16,10 +16,10 @@ public class Client implements DatabaseEntity<Client> {
 	/***************/
 
 	// Mostly internal constructor with all fields
-	public Client(int id, String name, String nif, String email, String address, int uncovered, boolean re) {
+	public Client(int id, String name, String cif, String email, String address, int uncovered, boolean re) {
 		this.id = id;
 		this.name = name;
-		this.nif = nif;
+		this.cif = cif;
 		this.email = email;
 		this.address = address;
 		this.uncovered = uncovered;
@@ -27,8 +27,8 @@ public class Client implements DatabaseEntity<Client> {
 	}
 
 	// Cut down constructor intended for actual development
-	public Client(String name, String nif, String email, String address, boolean re) {
-		this(0, name, nif, email, address, 0, re);
+	public Client(String name, String cif, String email, String address, boolean re) {
+		this(0, name, cif, email, address, 0, re);
 	}
 
 	/***********/
@@ -45,8 +45,8 @@ public class Client implements DatabaseEntity<Client> {
 	    return this.name;
 	}
 
-	public String getNif() {
-	    return this.nif;
+	public String getCif() {
+	    return this.cif;
 	}
 
 	public String getEmail() {
@@ -78,8 +78,8 @@ public class Client implements DatabaseEntity<Client> {
 		this.name = name;
 	}
 
-	public void setNif(String nif) {
-		this.nif = nif;
+	public void setCif(String cif) {
+		this.cif = cif;
 	}
 
 	public void setEmail(String email) {
@@ -111,7 +111,7 @@ public class Client implements DatabaseEntity<Client> {
 		return new Client(
 				getId(),
 				getName(),
-				getNif(),
+				getCif(),
 				getEmail(),
 				getAddress(),
 				getUncovered(),
@@ -119,8 +119,9 @@ public class Client implements DatabaseEntity<Client> {
 				);
 	}
 
+	// NOTE: Only for debugging
 	@Override
 	public String toString() {
-		return "Client [id=" + id + ", name=" + name + ", nif=" + nif + ", email=" + email + ", address=" + address + ", uncovered=" + uncovered + ", re=" + re + "]";
+		return "Client [id=" + id + ", name=" + name + ", cif=" + cif + ", email=" + email + ", address=" + address + ", uncovered=" + uncovered + ", re=" + re + "]";
 	}
 }

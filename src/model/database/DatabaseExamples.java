@@ -213,7 +213,7 @@ public class DatabaseExamples {
 		for (Client client : Database.clients.selectAll()) {
 			System.out.println("Id      " + client.getId());
 			System.out.println("Nombre: " + client.getName());
-			System.out.println("NIF:    " + client.getNif());
+			System.out.println("NIF:    " + client.getCif());
 			System.out.println("Email:  " + client.getEmail());
 			System.out.println();
 		}

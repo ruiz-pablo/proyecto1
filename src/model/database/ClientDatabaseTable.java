@@ -5,7 +5,7 @@ import model.Client;
 public class ClientDatabaseTable extends AbstractDatabaseTable<Client> {
 	public Client selectByCif(String cif) {
 		for (Client client : data) {
-			if (client.getNif().equals(cif))
+			if (client.getCif().equals(cif))
 				return client;
 		}
 
