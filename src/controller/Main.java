@@ -11,9 +11,6 @@ public class Main {
 		// DatabaseExamples.runAll();
 		
 		// Ejecutar el menu principal
-		// new MenuController().execute();
-		
-		MenuController menuController = new MenuController();
-		menuController.execute();
+		new MenuController().execute();
 	}
 }

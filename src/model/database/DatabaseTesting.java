@@ -48,7 +48,7 @@ public class DatabaseTesting {
 		assert Database.clients.selectAll().size() == 0;
 
 		ArrayList<Client>clients = new ArrayList<Client>();
-		clients.add(new Client("Fruteria Pepe S.L.", "12312312A", "contacto@fruteriapepe.com", "Calle Mayor 12, Madrid", true));
+		clients.add(new Client("Fruteria Pepe S.L.", "A1231231A", "contacto@fruteriapepe.com", "Calle Mayor 12, Madrid", true));
 		clients.add(new Client("Supermercado El Barato", "98765432B", "info@elbarato.com", "Avenida de la Constitución 34, Barcelona", true));
 		clients.add(new Client("Restaurante La Estrella", "76543210C", "reservas@laestrella.com", "Calle de la Luna 56, Valencia", false));
 		clients.add(new Client("Fruteria La Huerta", "54321098D", "fruteria@lahuerta.com", "Calle de la Huerta 23, Sevilla", true));

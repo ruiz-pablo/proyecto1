@@ -1,6 +1,7 @@
 package controller;
 
-import view.Input;
+import model.database.Database;
+import view.BillView;
 import view.MenuView;
 
 public class MenuController {
@@ -43,7 +44,7 @@ public class MenuController {
                     return;
             }
 
-			exec = Input.readYesNo("¿Quieres continuar con el programa? (s/n): ");
+			// exec = Input.readYesNo("¿Quieres continuar con el programa? (s/n): ");
         }
     }
 
@@ -93,6 +94,8 @@ public class MenuController {
                 productController.remove();
                 break;
         }
+        
+        BillView.printBills(Database.clients.selectByCif("A1231231A"));
     }
     
     // Método para el menú de facturas.

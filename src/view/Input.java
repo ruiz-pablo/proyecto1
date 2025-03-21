@@ -65,6 +65,32 @@ public class Input {
         }
         return selectedOptionNumber;
     }
+    
+	public static String readName(String msg) {
+		System.out.print(msg);
+		String name = readLine();
+
+		while (name.length() == 0) {
+			System.out.println("El nombre no puede estar vacio");
+			System.out.print(msg);
+			name = readLine();
+		}
+
+		return name;
+	}
+
+	public static String readDescription(String msg) {
+		System.out.print(msg);
+		String description = readLine();
+
+		while (description.length() == 0) {
+			System.out.println("La descripcion no puede estar vacia");
+			System.out.print(msg);
+			description = readLine();
+		}
+
+		return description;
+	}
 
 	public static String readCif(String msg) {
 		System.out.print(msg);
@@ -89,7 +115,7 @@ public class Input {
 			line = Input.readLine();
 		}
 		
-		return line.equals("y");
+		return line.equals("s");
 	}
 
 	public static int readId(String msg) {
@@ -130,5 +156,72 @@ public class Input {
 		}
 
 		return amount;
+	}
+	
+	public static int readPrice(String msg) {
+		int price = 0;
+		boolean isValid = false;
+
+		while (!isValid) {
+			System.out.print(msg);
+			Scanner scanner = new Scanner(readLine());
+			
+			if (scanner.hasNextFloat()) {
+				price = (int) Math.round(scanner.nextFloat() * 100.0); // Convert to cents
+				if (price >= 0)
+					isValid = true;
+			}
+			
+			if (!isValid)
+				System.out.println("El precio introducido no es valido");
+
+			scanner.close();
+		}
+		
+		return price;
+	}
+	
+	public static int readPercentage(String msg) {
+		int percentage = 0;
+		boolean isValid = false;
+
+		while (!isValid) {
+			System.out.print(msg);
+			Scanner scanner = new Scanner(readLine());
+			
+			if (scanner.hasNextInt()) {
+				percentage = scanner.nextInt();
+				if (percentage >= 0 && percentage <= 100)
+					isValid = true;
+			}
+			
+			if (!isValid)
+				System.out.println("El porcentaje introducido no es valido");
+
+			scanner.close();
+		}
+		
+		return percentage;
+	}
+	
+	public static int readStock(String msg) {
+		int stock = 0;
+		boolean isValid = false;
+
+		while (!isValid) {
+			try {
+				System.out.print(msg);
+				stock = Integer.parseInt(Input.readLine());
+				if (stock < 0)
+					throw new NumberFormatException("Stock is lower than 0");
+
+				isValid = true;
+			}
+			catch (NumberFormatException e) {
+				System.out.println("La cantidad de stock introducida no es valida");
+			}
+		}
+
+		return stock;
 	}
 }
