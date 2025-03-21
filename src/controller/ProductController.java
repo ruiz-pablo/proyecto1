@@ -2,7 +2,7 @@ package controller;
 
 import model.Product;
 import model.database.Database;
-
+import view.Input;
 import view.ProductView;
 
 public class ProductController extends AbstractController {
@@ -30,7 +30,11 @@ public class ProductController extends AbstractController {
     public void remove() {
         int productId = view.remove();
 		Database.products.remove(productId);
-		System.out.println("Producto eliminado con éxito.");
+		
+		if (!Input.readYesNo("Seguro que quire eliminar el producto?"))
+			System.out.println("Cancelando...");
+		else
+			System.out.println("Producto eliminado con éxito.");
     }
 
     @Override
