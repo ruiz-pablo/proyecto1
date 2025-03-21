@@ -94,8 +94,6 @@ public class MenuController {
                 productController.remove();
                 break;
         }
-        
-        BillView.printBills(Database.clients.selectByCif("A1231231A"));
     }
     
     // Método para el menú de facturas.
