@@ -112,9 +112,4 @@ public class Product implements DatabaseEntity<Product> {
 				this.stock
 				);
 	}
-
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price + ", iva=" + iva + ", stock=" + stock + "]";
-	}
 }

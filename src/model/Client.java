@@ -118,10 +118,4 @@ public class Client implements DatabaseEntity<Client> {
 				getRe()
 				);
 	}
-
-	// NOTE: Only for debugging
-	@Override
-	public String toString() {
-		return "Client [id=" + id + ", name=" + name + ", cif=" + cif + ", email=" + email + ", address=" + address + ", uncovered=" + uncovered + ", re=" + re + "]";
-	}
 }

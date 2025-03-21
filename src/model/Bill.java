@@ -99,9 +99,4 @@ public class Bill implements DatabaseEntity<Bill> {
 				this.paid
 		);
 	}
-
-	@Override
-	public String toString() {
-		return "Bill [id=" + id + ", clientId=" + clientId + ", date=" + date + ", amount=" + amount + ", paid=" + paid + "]";
-	}
 }

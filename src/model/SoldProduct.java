@@ -81,9 +81,4 @@ public class SoldProduct implements DatabaseEntity<SoldProduct> {
 	public SoldProduct newInstance() {
 		return new SoldProduct(this.id, this.billId, this.productId, this.amount);
 	}
-
-	@Override
-	public String toString() {
-		return "SoldProduct [id=" + id + ", billId=" + billId + ", productId=" + productId + ", amount=" + amount + "]";
-	}
 }
