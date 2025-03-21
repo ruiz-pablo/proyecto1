@@ -4,6 +4,7 @@ import model.Product;
 
 import model.database.Database;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class ProductView extends AbstractView<Product> {
@@ -15,18 +16,25 @@ public class ProductView extends AbstractView<Product> {
             System.out.println("No hay productos para mostrar.");
             return;
         }
+        
+		// Print table of products
+		String[] columns = new String[] {"Código", "Nombre", "Descripcion", "Precio", "IVA", "Stock"};
+		ArrayList<String[]> data = new ArrayList<String[]>();
 
-        System.out.println("Listado de productos:");
-        System.out.println("---------------------");
-        for (Product product : products) {
-            System.out.println("Código: "          + product.getId());
-            System.out.println("Nombre: "      + product.getName());
-            System.out.println("Descripción: " + product.getDescription());
-            System.out.println(String.format("Precio: %.2f Euros", product.getPrice() / 100.0));
-            System.out.println("IVA: "         + product.getIva() + "%");
-            System.out.println("Stock: "       + product.getStock());
-            System.out.println("---------------------");
-        }
+		for (Product product : products) {
+			ArrayList<String> row = new ArrayList<String>();
+
+			row.add(String.valueOf(product.getId()));
+			row.add(product.getName());
+			row.add(product.getDescription());
+			row.add(String.format("%.2f€", product.getPrice() / 100.0));
+			row.add(String.format("%d%%", product.getIva()));
+			row.add(String.valueOf(product.getStock()));
+
+			data.add(row.toArray(new String[0]));
+		}
+		
+		Output.printTable(columns, data.toArray(new String[0][]));
     }
     
     @Override
