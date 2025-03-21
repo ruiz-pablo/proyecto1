@@ -19,7 +19,7 @@ public class ProductView extends AbstractView<Product> {
         System.out.println("Listado de productos:");
         System.out.println("---------------------");
         for (Product product : products) {
-            System.out.println("ID: "          + product.getId());
+            System.out.println("Código: "          + product.getId());
             System.out.println("Nombre: "      + product.getName());
             System.out.println("Descripción: " + product.getDescription());
             System.out.println(String.format("Precio: %.2f Euros", product.getPrice() / 100.0));
@@ -44,10 +44,10 @@ public class ProductView extends AbstractView<Product> {
 
     @Override
     public int remove() {
-    	int productId = Input.readId("Ingrese el ID del producto a eliminar: ");
+		int productId = Input.readId("Ingrese el código del producto a eliminar: ");
     	while (!Database.products.exists(productId)) {
     		System.out.println("No se ha encontrado el producto en la base de datos");
-			productId = Input.readId("Ingrese la ID del producto a eliminar: ");
+			productId = Input.readId("Ingrese el código del producto a eliminar: ");
     	}
     	
     	return productId;
@@ -56,12 +56,12 @@ public class ProductView extends AbstractView<Product> {
     @Override
     public Product modify() {
         // Capturar el ID del producto a modificar
-        int id = Input.readId("Ingrese el ID del producto a modificar: ");
+        int id = Input.readId("Ingrese el código del producto a modificar: ");
 
         // Verificar si el producto existe en la base de datos
         while (!Database.products.exists(id)) {
-            System.out.println("Error: No existe un producto con ID " + id);
-			id = Input.readId("Ingrese el ID del producto a modificar: ");
+            System.out.println("Error: No existe un producto con código " + id);
+			id = Input.readId("Ingrese el código del producto a modificar: ");
         }
 
         // Capturar los nuevos datos del producto

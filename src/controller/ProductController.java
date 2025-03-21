@@ -29,22 +29,26 @@ public class ProductController extends AbstractController {
     @Override
     public void remove() {
         int productId = view.remove();
-		Database.products.remove(productId);
 		
-		if (!Input.readYesNo("Seguro que quire eliminar el producto?"))
+		if (!Input.readYesNo("Seguro que quire eliminar el producto? (s/n): ")) {
 			System.out.println("Cancelando...");
-		else
+		}
+		else {
+			Database.products.remove(productId);
 			System.out.println("Producto eliminado con éxito.");
+		}
     }
 
     @Override
     public void modify() {
         Product updatedProduct = view.modify();
 
-		Database.products.update(updatedProduct);
-		if (!Input.readYesNo("Seguro que quire modificar el producto?"))
+		if (!Input.readYesNo("Seguro que quire modificar el producto? (s/n): ")) {
 			System.out.println("Cancelando...");
-		else
+		}
+		else {
+			Database.products.update(updatedProduct);
 			System.out.println("Producto actualizado con éxito.");
+		}
     }
 }

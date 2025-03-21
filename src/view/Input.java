@@ -222,4 +222,16 @@ public class Input {
 
 		return stock;
 	}
+	
+	// TODO: Improve
+	public static String readEmail(String msg) {
+		System.out.print(msg);
+		return readLine();
+	}
+
+	// TODO: Improve
+	public static String readAddress(String msg) {
+		System.out.print(msg);
+		return readLine();
+	}
 }

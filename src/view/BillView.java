@@ -35,9 +35,8 @@ public class BillView {
 	}
 
 	public Object[] create() {
-		// TODO: Print clients
 		// Print clients
-		// new ClientView().list();
+		new ClientView().list();
 
 		// Read CIF
 		String cif = Input.readCif("Introduzca el CIF de un cliente: ");
