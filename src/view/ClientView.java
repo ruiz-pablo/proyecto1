@@ -2,6 +2,8 @@ package view;
 
 import model.Client;
 import model.database.Database;
+
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class ClientView extends AbstractView<Client> {
@@ -14,18 +16,26 @@ public class ClientView extends AbstractView<Client> {
             return;
         }
 
-        System.out.println("Listado de clientes:");
-        System.out.println("---------------------");
-        for (Client client : clients) {
-            System.out.println("ID: " + client.getId());
-            System.out.println("Nombre: " + client.getName());
-            System.out.println("CIF: " + client.getCif());
-            System.out.println("Email: " + client.getEmail());
-            System.out.println("Dirección: " + client.getAddress());
-            System.out.println("Saldo descubierto: " + client.getUncovered());
-            System.out.println("Recargo equivalencia: " + (client.getRe() ? "Sí" : "No"));
-            System.out.println("---------------------");
-        }
+		// Print table of products
+		String[] columns = new String[] {"Código", "Nombre", "CIF", "Email", "Dirección", "RE", "Descubierto"};
+		ArrayList<String[]> data = new ArrayList<String[]>();
+
+		// Change to ArrayList
+		for (Client client : clients) {
+			ArrayList<String> row = new ArrayList<String>();
+
+			row.add(String.valueOf(client.getId()));
+			row.add(client.getName());
+			row.add(client.getCif());
+			row.add(client.getEmail());
+			row.add(client.getAddress());
+			row.add((client.getRe() ? "Sí" : "No"));
+			row.add(String.format("%.2f€", client.getUncovered() / 100.0));
+
+			data.add(row.toArray(new String[0]));
+		}
+		
+		Output.printTable(columns, data.toArray(new String[0][]));
     }
 
     @Override
