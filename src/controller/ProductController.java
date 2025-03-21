@@ -48,5 +48,3 @@ public class ProductController extends AbstractController {
 			System.out.println("Producto actualizado con éxito.");
     }
 }
-
-//database.insert para insertar los productos en la base de datos en la parte de create()
