@@ -41,10 +41,11 @@ public class ProductController extends AbstractController {
     public void modify() {
         Product updatedProduct = view.modify();
 
-        if (updatedProduct != null) {
-			Database.products.update(updatedProduct);
+		Database.products.update(updatedProduct);
+		if (!Input.readYesNo("Seguro que quire modificar el producto?"))
+			System.out.println("Cancelando...");
+		else
 			System.out.println("Producto actualizado con éxito.");
-        }
     }
 }
 
