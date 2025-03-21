@@ -10,7 +10,12 @@ import model.Product;
 import model.SoldProduct;
 import model.database.Database;
 
+/*
+ * BillView does not extends AbstractView 
+ * because it does not need a modify method
+ */
 public class BillView {
+
 	private ClientView clientView;
 	private ProductView productView;
 
@@ -19,7 +24,7 @@ public class BillView {
 		this.productView = new ProductView();
 	}
 
-	public int list() {
+	public void list() {
 		// Print clients
 		clientView.list();
 
@@ -40,7 +45,8 @@ public class BillView {
 			billId = Input.readId("Introduzca el código de la factura que desea imprimir: ");
 		}
 
-		return billId;
+		// Print bill
+		printBillDetails(billId);
 	}
 
 	public Object[] create() {

@@ -23,10 +23,7 @@ public class BillController extends AbstractController {
 	@Override
 	public void list() {
 		// Read bill id to print from user
-		int billId = view.list();
-		
-		// Print bill
-		view.printBillDetails(billId);
+		view.list();
 	}
 
 	@Override
