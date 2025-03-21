@@ -2,6 +2,8 @@ package view;
 
 import java.util.HashMap;
 
+import controller.ProductController;
+
 import java.util.ArrayList;
 
 import model.Bill;
@@ -11,9 +13,109 @@ import model.SoldProduct;
 import model.database.Database;
 
 public class BillView {
+	public int list() {
+		// Read client CIF
+		String clientCif = Input.readCif("Introduzca el CIF de un cliente: ");
+		while (Database.clients.selectByCif(clientCif) == null) {
+			clientCif = Input.readCif("Introduzca el CIF de un cliente: ");
+			System.out.println("No existe ningun cliente con el CIF introducido");
+		}
+
+		// Print table of bills
+		printBills(Database.clients.selectByCif(clientCif));
+
+		// Read bill id
+		int billId = Input.readId("Introduzca el código de la factura que desea imprimir: ");
+		while (!Database.bills.exists(billId)) {
+			System.out.println("No existe ninguna factura con el codigo introducido");
+			billId = Input.readId("Introduzca el código de la factura que desea imprimir: ");
+		}
+
+		return billId;
+	}
+
+	public Object[] create() {
+		// TODO: Print clients
+		// Print clients
+		// new ClientView().list();
+
+		// Read CIF
+		String cif = Input.readCif("Introduzca el CIF de un cliente: ");
+		Client client = Database.clients.selectByCif(cif);
+		
+		// There is no client with that CIF
+		if (client == null)
+			throw new IllegalArgumentException("No se ha encontrado ningún cliente con el CIF introducido");
+		
+		// Create map of products-amounts from user input
+		HashMap<Integer, Integer> productMap = new HashMap<Integer, Integer>();
+
+		boolean continueAdding = true;
+		do
+		{
+			// Display products
+			new ProductController().list();
+			
+			int productId = Input.readId("Introduzca el código de un producto: ");
+			Product product = Database.products.select(productId);
+			
+			if (product == null) {
+				System.out.println("No existe ningún producto con el código introducido");
+			}
+			else {
+				// Read amount
+				System.out.println("Stock disponible: " + product.getStock());
+				int productAmount = Input.readAmount("Introduzca la cantidad del producto seleccionado que desea: ");
+				
+				// Verify that the amount selected is not bigger than the current stock
+				if (productAmount <= product.getStock())
+					addProductToList(productMap, productId, productAmount);
+				else
+					System.out.println("No se puede añadir el producto. La cantidad del producto introducida supera la cantidad en stock");
+			}
+			
+			continueAdding = Input.readYesNo("¿Desea añadir otro producto? (s/n): ");
+		} while (continueAdding);
+		
+
+		// Only create bill if there are products
+		if (productMap.size() == 0)
+			throw new IllegalArgumentException("No se ha seleccionado ningún producto");
+		
+		// Ask where to print the bill or not
+		boolean printBill = Input.readYesNo("¿Desea imprimir la factura? (s/n): ");
+
+		// Return all values needed to create the bill to the controller
+		return new Object[] {client, productMap, printBill};
+	}
+
+	public int modify() {
+		String clientCif = Input.readCif("Introduzca el CIF de un cliente: ");
+
+		while (Database.clients.selectByCif(clientCif) == null) {
+			clientCif = Input.readCif("Introduzca el CIF de un cliente: ");
+			System.out.println("No existe ningun cliente con el CIF introducido");
+		}
+
+		// Print table of bills
+		printBills(Database.clients.selectByCif(clientCif));
+
+		// Read bill id and print details
+		int billId = Input.readId("Introduzca el código de la factura que desea marcar como pagada: ");
+		while (!Database.bills.exists(billId)) {
+			System.out.println("No existe ninguna factura con el código introducido");
+			billId = Input.readId("Introduzca el código de la factura que desea marcar como pagada: ");
+		}
+		
+		return billId;
+	}
+
+	/******************/
+	/* Helper Methods */
+	/******************/
 	
 	private void printBills(Client client) {
-		String[] columns = new String[] {"Id", "Client", "Date", "Amount", "Paid"};
+		String[] columns = new String[] {"Código", "Cliente", "Fecha", "Total", "Pagada"};
 		ArrayList<String[]> data = new ArrayList<String[]>();
 
 		for (Bill bill : Database.bills.selectByClientId(client.getId())) {
@@ -27,80 +129,6 @@ public class BillView {
 		}
 		
 		Output.printTable(columns, data.toArray(new String[0][]));
-	}
-
-	public int modify() {
-		String clientCif = Input.readCif("Introduzca la id de un cliente: ");
-
-		if (Database.clients.selectByCif(clientCif) == null)
-			throw new IllegalArgumentException("No existe el cliente introducido");
-
-		// Print table of bills
-		printBills(Database.clients.selectByCif(clientCif));
-
-		// Read bill id and print details
-		int billId = Input.readId("Introduzca el codigo de la factura que desea marcar como pagada: ");
-		if (!Database.bills.exists(billId))
-			throw new IllegalArgumentException("No existe la factura introducida");
-		
-		// User confirmation
-		if (!Input.readYesNo("Marcar factura como pagada? (s/n): "))
-			throw new IllegalArgumentException("Cancelando operacion");
-
-		System.out.println("Se ha marcado la factura como pagada");
-		return billId;
-	}
-
-	public Object[] create2() {
-			// Read CIF
-			String cif = Input.readCif("Introduzca el CIF del cliente: ");
-			Client client = Database.clients.selectByCif(cif);
-			
-			// There is no client with that CIF
-			if (client == null)
-				throw new IllegalArgumentException("No se ha encontrado ningun client con el CIF introducido");
-			
-			// Create map of products-amounts from user input
-			HashMap<Integer, Integer> productMap = new HashMap<Integer, Integer>();
-
-			boolean continueAdding = true;
-			do
-			{
-				// TODO: Display all products
-				// Display products
-				// new ProductController().list();
-				
-				int productId = Input.readId("Introduzca la id de un producto: ");
-				Product product = Database.products.select(productId);
-				
-				if (product == null) {
-					System.out.println("No existe ningun producto con el id introducido");
-				}
-				else {
-					// Read amount
-					System.out.println("Stock disponible: " + product.getStock());
-					int productAmount = Input.readAmount("Introduzca la cantidad del producto seleccionado que desea: ");
-					
-					// Verify that the amount selected is not bigger than the current stock
-					if (productAmount <= product.getStock())
-						addProductToList(productMap, productId, productAmount);
-					else
-						System.out.println("No se puede añadir el producto. La cantidad del producto introducida supera la cantidad en stock");
-				}
-				
-				continueAdding = Input.readYesNo("Desea añadir otro producto? (s/n): ");
-			} while (continueAdding);
-			
-
-			// Only create bill if there are products
-			if (productMap.size() == 0)
-				throw new IllegalArgumentException("No se ha seleccionado ningun producto");
-			
-			// Ask where to print the bill or not
-			boolean printBill = Input.readYesNo("Desea imprimir la factura (s/n): ");
-
-			// Return all values needed to create the bill to the controller
-			return new Object[] {client, productMap, printBill};
 	}
 
 	private void addProductToList(HashMap<Integer, Integer> productsMap, int productId, int amount) {
@@ -122,22 +150,6 @@ public class BillView {
 		else
 			productsMap.put(Integer.valueOf(productId), Integer.valueOf(amount) + productsMap.get(Integer.valueOf(productId)));
 	}
-
-	public int list() {
-		String clientCif = Input.readCif("Introduzca la id de un cliente: ");
-		if (Database.clients.selectByCif(clientCif) == null)
-			throw new IllegalArgumentException("No existe el cliente introducido");
-
-		// Print table of bills
-		printBills(Database.clients.selectByCif(clientCif));
-
-		// Read bill id and print details
-		int billId = Input.readId("Introduzca el codigo de la factura que desea imprimir: ");
-		if (!Database.bills.exists(billId))
-			throw new IllegalArgumentException("No existe la factura introducida");
-
-		return billId;
-	}
 	
 	public void printBillDetails(int billId) {
 		Bill bill = Database.bills.select(billId);
@@ -148,7 +160,7 @@ public class BillView {
 		System.out.println("===========");
 		System.out.println("  Cliente  ");
 		System.out.println("===========");
-		System.out.println("Id cliente: " + client.getId());
+		System.out.println("Código cliente: " + client.getId());
 		System.out.println("Nombre: " + client.getName());
 		System.out.println("CIF: " + client.getCif());
 		System.out.println("Recago equivalencia: " + (client.getRe() ? "Si" : "No"));
@@ -158,13 +170,13 @@ public class BillView {
 		System.out.println("===========");
 		System.out.println("  Factura  ");
 		System.out.println("===========");
-		System.out.println("Id factura: " + bill.getId());
+		System.out.println("Código factura: " + bill.getId());
 		System.out.println("Total: " + bill.getAmount());
 		System.out.println("Pagada: " + (bill.isPaid() ? "Si" : "No"));
 		System.out.println();
 
 		// Print table of products
-		String[] columns = new String[] {"Id", "Nombre", "Precio", "Cantidad"};
+		String[] columns = new String[] {"Código", "Nombre", "Precio", "Cantidad"};
 		ArrayList<String[]> data = new ArrayList<String[]>();
 
 		for (SoldProduct soldProduct : soldProducts) {

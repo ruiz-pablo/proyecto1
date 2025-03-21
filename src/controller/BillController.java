@@ -22,46 +22,65 @@ public class BillController extends AbstractController {
 
 	@Override
 	public void list() {
-		do {
-			try {
-				// Read bill id to print from user
-				int billId = view.list();
-				
-				// Print bill
-				view.printBillDetails(billId);
-			}
-			catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		while (Input.readYesNo("Desea imprimir otra factura? (s/n)"));
+		// Read bill id to print from user
+		int billId = view.list();
+		
+		// Print bill
+		view.printBillDetails(billId);
 	}
 
 	@Override
 	public void create() {
-		do {
-			try {
-				Object[] values =  view.create2();
-				Client client = (Client) values[0];
-				@SuppressWarnings("unchecked")
-				HashMap<Integer, Integer> productMap = (HashMap<Integer, Integer>) values[1];
-				boolean printBill = (boolean) values[2];
-				
-				// Create bill
-				int billId = createBillMethod(client, productMap);
-				
-				// Print bill
-				if (printBill)
-					view.printBillDetails(billId);
+		try {
+			// Get bill's values from user
+			Object[] values =  view.create();
 
-			} catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}
+			// Cast them to proper values
+			Client client = (Client) values[0];
+			@SuppressWarnings("unchecked")
+			HashMap<Integer, Integer> productMap = (HashMap<Integer, Integer>) values[1];
+			boolean printBill = (boolean) values[2];
+			
+			// Create bill
+			int billId = createBillFromProductMap(client, productMap);
+			
+			// Print bill
+			if (printBill)
+				view.printBillDetails(billId);
+
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
 		}
-		while (Input.readYesNo("Desea emitir otra factura? (s/n): "));
 	}
 
-	private int createBillMethod(Client client, HashMap<Integer, Integer> productMap) {
+
+	@Override
+	public void remove() {
+		// Do not implement, it is not going to be used
+	}
+
+	@Override
+	public void modify() {
+		// Read bill id from user
+		int billId = view.modify();
+		Bill bill = Database.bills.select(billId);
+
+		// User confirmation
+		if (!Input.readYesNo("¿Marca factura como pagada? (s/n): ")) {
+			System.out.println("Cancelando...");
+		}
+		else {
+			markBillAsPaid(bill.getId()); // Mark as paid
+			decreaseUncovered(bill.getClientId(), bill.getAmount()); // Decrease client's uncovered
+			System.out.println("Se ha marcado la factura como pagada");
+		}
+	}
+
+	/******************/
+	/* Helper Methods */
+	/******************/
+
+	private int createBillFromProductMap(Client client, HashMap<Integer, Integer> productMap) {
 		// Create bill
 		Bill bill = new Bill(
 				client.getId(), // Id of the client
@@ -88,7 +107,7 @@ public class BillController extends AbstractController {
 			Database.soldProducts.insert(p);
 		
 		// Update total amount of the bill
-		int amount = calculateAmountBill(billId);
+		int amount = calculateBillAmount(billId);
 		bill.setAmount(amount);
 		Database.bills.update(bill);
 		
@@ -98,7 +117,7 @@ public class BillController extends AbstractController {
 		return bill.getId();
 	}
 
-	private int calculateAmountBill(int billId) {
+	private int calculateBillAmount(int billId) {
 		Bill bill = Database.bills.select(billId);
 		
 		int importe = 0;
@@ -120,38 +139,11 @@ public class BillController extends AbstractController {
 		return importe + iva + re_amount;
 	}
 
-	@Override
-	public void remove() {
-		// Do not implement, it is not going to be used
-	}
-
-	@Override
-	public void modify() {
-		do {
-			try {
-				// Read bill id from user
-				int billId = view.modify();
-				Bill bill = Database.bills.select(billId);
-
-				// Mark as paid
-				markBillAsPaid(bill.getId());
-				
-				// Decrease client's uncovered
-				decreaseUncovered(bill.getClientId(), bill.getAmount());
-			} catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		while (Input.readYesNo("Desea marcar otra factura como pagada? (s/n): "));
-	}
-
 	private void markBillAsPaid(int billId) {
 		// Mark bill as paid
 		Bill bill = Database.bills.select(billId);
 		bill.setPaid(true);
 		Database.bills.update(bill);
-		
-		// Update client's uncovered
 	}
 
 	private void increaseUncovered(int clientId, int amount) {
