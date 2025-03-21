@@ -39,10 +39,8 @@ public class MenuController {
                     break;
                 case 4:
                     System.out.println("Saliendo del programa...");
-                    return;
+                    exec = false;
             }
-
-			// exec = Input.readYesNo("¿Quieres continuar con el programa? (s/n): ");
         }
     }
 
