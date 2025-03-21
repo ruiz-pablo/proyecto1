@@ -37,9 +37,9 @@ public class MenuView {
 
     public int startMenuFacturas() {
         System.out.println("--- ELIGE UNA OPCIÓN DEL 1 AL 3  ---");
-        System.out.println("- 1. Emitir factura -");
-        System.out.println("- 2. Marca factura como pagada -");
-        System.out.println("- 3. Listar facturas de un cliente-");
+        System.out.println("- 1. Listar facturas de un cliente -");
+        System.out.println("- 2. Emitir factura -");
+        System.out.println("- 3. Marca factura como pagada -");
         System.out.print("Opción: ");
 
         return Input.readOption(1, 3);

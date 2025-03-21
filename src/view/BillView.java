@@ -2,8 +2,6 @@ package view;
 
 import java.util.HashMap;
 
-import controller.ProductController;
-
 import java.util.ArrayList;
 
 import model.Bill;
@@ -13,7 +11,18 @@ import model.SoldProduct;
 import model.database.Database;
 
 public class BillView {
+	private ClientView clientView;
+	private ProductView productView;
+
+	public BillView() {
+		this.clientView = new ClientView();
+		this.productView = new ProductView();
+	}
+
 	public int list() {
+		// Print clients
+		clientView.list();
+
 		// Read client CIF
 		String clientCif = Input.readCif("Introduzca el CIF de un cliente: ");
 		while (Database.clients.selectByCif(clientCif) == null) {
@@ -36,7 +45,7 @@ public class BillView {
 
 	public Object[] create() {
 		// Print clients
-		new ClientView().list();
+		clientView.list();
 
 		// Read CIF
 		String cif = Input.readCif("Introduzca el CIF de un cliente: ");
@@ -53,7 +62,7 @@ public class BillView {
 		do
 		{
 			// Display products
-			new ProductController().list();
+			productView.list();
 			
 			int productId = Input.readId("Introduzca el código de un producto: ");
 			Product product = Database.products.select(productId);
@@ -90,7 +99,7 @@ public class BillView {
 
 	public int modify() {
 		// Print all clients
-		new ClientView().list();
+		clientView.list();
 
 		String clientCif = Input.readCif("Introduzca el CIF de un cliente: ");
 

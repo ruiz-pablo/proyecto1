@@ -98,16 +98,16 @@ public class MenuController {
 
         switch (option) {
             case 1:
+                System.out.println("-- Has seleccionado listar facturas. --");
+                billController.list();
+                break;
+            case 2:
                 System.out.println("-- Has seleccionado emitir factura. --");
                 billController.create();
                 break;
-            case 2:
+            case 3:
                 System.out.println("-- Has seleccionado marcar factura como pagada. --");
                 billController.modify();
-                break;
-            case 3:
-                System.out.println("-- Has seleccionado listar facturas. --");
-                billController.list();
                 break;
         }
     }
