@@ -52,18 +52,27 @@ public class ClientView extends AbstractView<Client> {
 
     @Override
     public int remove() {
+    	// Print all clients
+    	list();
+
+    	// Remove client
     	String clientCif = Input.readCif("Ingrese el CIF del cliente que desea eliminar: ");
     	while (Database.clients.selectByCif(clientCif) == null) {
     		System.out.println("No exite ningún cliente con el CIF introducido");
 			clientCif = Input.readCif("Ingrese el CIF del cliente que desea eliminar: ");
     	}
 
+    	// Return id of client to be remove
     	Client client = Database.clients.selectByCif(clientCif);
     	return client.getId();
     }
 
     @Override
     public Client modify() {
+    	// Print all clients
+    	list();
+
+    	// Update client
     	String clientCif = Input.readCif("Ingrese el CIF del cliente que desea modificar: ");
     	while (Database.clients.selectByCif(clientCif) == null) {
     		System.out.println("No exite ningún cliente con el CIF introducido");
@@ -77,6 +86,7 @@ public class ClientView extends AbstractView<Client> {
         String address = Input.readAddress("Nueva dirección: ");
         boolean re = Input.readYesNo("¿Aplicar recargo de equivalencia? (s/n): ");
 
+        // Return client object with updated values
         Client updatedClient = Database.clients.selectByCif(clientCif);
         updatedClient.setName(name);
         updatedClient.setCif(cif);

@@ -89,6 +89,9 @@ public class BillView {
 	}
 
 	public int modify() {
+		// Print all clients
+		new ClientView().list();
+
 		String clientCif = Input.readCif("Introduzca el CIF de un cliente: ");
 
 		while (Database.clients.selectByCif(clientCif) == null) {

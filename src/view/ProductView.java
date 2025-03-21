@@ -52,17 +52,25 @@ public class ProductView extends AbstractView<Product> {
 
     @Override
     public int remove() {
+    	// Print all products
+    	list();
+
+    	// Remove product
 		int productId = Input.readId("Ingrese el código del producto a eliminar: ");
     	while (!Database.products.exists(productId)) {
     		System.out.println("No se ha encontrado el producto en la base de datos");
 			productId = Input.readId("Ingrese el código del producto a eliminar: ");
     	}
     	
+    	// Return id of product to be remove
     	return productId;
     }
 
     @Override
     public Product modify() {
+    	// Print all products
+    	list();
+
         // Capturar el ID del producto a modificar
         int id = Input.readId("Ingrese el código del producto a modificar: ");
 
