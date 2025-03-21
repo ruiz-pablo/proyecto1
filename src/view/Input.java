@@ -10,7 +10,7 @@ public class Input {
 	}
 
 	public static String readLine() {
-		return stdin.nextLine();
+		return stdin.nextLine().trim();
 	}
 	
 	// TODO: Properly validate first and last letter
@@ -222,16 +222,40 @@ public class Input {
 
 		return stock;
 	}
-	
-	// TODO: Improve
-	public static String readEmail(String msg) {
-		System.out.print(msg);
-		return readLine();
-	}
 
-	// TODO: Improve
 	public static String readAddress(String msg) {
 		System.out.print(msg);
-		return readLine();
+		String address = readLine();
+
+		while (address.length() == 0) {
+			System.out.println("La direccion no puede quedar en blanco");
+			System.out.print(msg);
+			address = readLine();
+		}
+
+		return address;
+	}
+
+	public static String readEmail(String msg) {
+		String email = "";
+		boolean isValid = false;
+
+		while (!isValid) {
+			try {
+				System.out.print(msg);
+				email = readLine();
+				if (email.length() == 0)
+					throw new NumberFormatException("Email is blank");
+				if (!email.contains("@"))
+					throw new NumberFormatException("Email does not contain '@'");
+				
+				isValid = true;
+			}
+			catch (NumberFormatException e) {
+				System.out.println("El correo electronico introducido no es valido");
+			}
+		}
+
+		return email;
 	}
 }
