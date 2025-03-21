@@ -1,7 +1,5 @@
 package controller;
 
-import model.database.Database;
-import view.BillView;
 import view.MenuView;
 
 public class MenuController {
