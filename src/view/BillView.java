@@ -124,7 +124,7 @@ public class BillView {
 			row[1] = client == null ? "None" : client.getName();
 			row[2] = String.valueOf(bill.getDate());
 			row[3] = String.format("%.2f€", bill.getAmount() / 100.0);
-			row[4] = String.valueOf(bill.isPaid() ? "Si" : "No");
+			row[4] = String.valueOf(bill.isPaid() ? "Sí" : "No");
 			data.add(row);
 		}
 		
@@ -163,7 +163,7 @@ public class BillView {
 		System.out.println("Código cliente: " + client.getId());
 		System.out.println("Nombre: " + client.getName());
 		System.out.println("CIF: " + client.getCif());
-		System.out.println("Recago equivalencia: " + (client.getRe() ? "Si" : "No"));
+		System.out.println("Recago equivalencia: " + (client.getRe() ? "Sí" : "No"));
 		System.out.println();
 		
 		// Print bill's details
@@ -172,7 +172,7 @@ public class BillView {
 		System.out.println("===========");
 		System.out.println("Código factura: " + bill.getId());
 		System.out.println("Total: " + bill.getAmount());
-		System.out.println("Pagada: " + (bill.isPaid() ? "Si" : "No"));
+		System.out.println("Pagada: " + (bill.isPaid() ? "Sí" : "No"));
 		System.out.println();
 
 		// Print table of products
