@@ -16,7 +16,7 @@ public class ClientView extends AbstractView<Client> {
             return;
         }
 
-		// Print table of clientes
+		// Print table of clients
 		String[] columns = new String[] {"Código", "Nombre", "CIF", "Email", "Dirección", "RE", "Descubierto"};
 		ArrayList<String[]> data = new ArrayList<String[]>();
 
