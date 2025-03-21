@@ -179,13 +179,15 @@ public class BillView {
 		ArrayList<String[]> data = new ArrayList<String[]>();
 
 		for (SoldProduct soldProduct : soldProducts) {
+			ArrayList<String> row = new ArrayList<String>();
 			Product product = Database.products.select(soldProduct.getProductId());
-			String[] row = new String[columns.length];
-			row[0] = String.valueOf(soldProduct.getId());
-			row[1] = String.valueOf(product.getName());
-			row[2] = String.format("%.2f€", product.getPrice() / 100.0);
-			row[3] = String.valueOf(soldProduct.getAmount());
-			data.add(row);
+
+			row.add(String.valueOf(soldProduct.getId()));
+			row.add(String.valueOf(product.getName()));
+			row.add(String.format("%.2f€", product.getPrice() / 100.0));
+			row.add(String.valueOf(soldProduct.getAmount()));
+
+			data.add(row.toArray(new String[0]));
 		}
 		
 		System.out.println("=============");
