@@ -81,7 +81,7 @@ public class BillController extends AbstractController {
 	/* Helper Methods */
 	/******************/
 
-	private int createBillFromProductMap(Client client, HashMap<Integer, Integer> productMap) {
+	public int createBillFromProductMap(Client client, HashMap<Integer, Integer> productMap) {
 		// Create bill
 		Bill bill = new Bill(
 				client.getId(), // Id of the client
@@ -140,7 +140,7 @@ public class BillController extends AbstractController {
 		return importe + iva + re_amount;
 	}
 
-	private void markBillAsPaid(int billId) {
+	public void markBillAsPaid(int billId) {
 		// Mark bill as paid
 		Bill bill = Database.bills.select(billId);
 		

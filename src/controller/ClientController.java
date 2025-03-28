@@ -56,7 +56,7 @@ public class ClientController extends AbstractController {
 		}
 	}
 	
-	private void addClient(Client client) throws IllegalArgumentException {
+	public void addClient(Client client) throws IllegalArgumentException {
 		// Check for valid parameters
 		if (client == null ||
 			client.getName() == null ||
