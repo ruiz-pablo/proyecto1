@@ -20,9 +20,14 @@ public class ClientController extends AbstractController {
 
 	@Override
 	public void create() {
-		Client newClient = view.create();
-		Database.clients.insert(newClient);
-		System.out.println("Cliente agregado con éxito");
+		try {
+			Client newClient = view.create();
+			addClient(newClient);
+			System.out.println("Cliente agregado con éxito");
+		} catch (IllegalArgumentException e) {
+			System.out.println("No se pudo agregar el cliente");
+			System.out.println(e.getMessage());
+		}
 	}
 
 	@Override
@@ -49,5 +54,30 @@ public class ClientController extends AbstractController {
 			Database.clients.update(modifiedClient);
 			System.out.println("Producto actualizado con éxito.");
 		}
+	}
+	
+	private void addClient(Client client) throws IllegalArgumentException {
+		// Check for valid parameters
+		if (client == null ||
+			client.getName() == null ||
+			client.getCif() == null ||
+			client.getEmail() == null ||
+			client.getAddress() == null)
+			throw new IllegalArgumentException("Alguno de los parametros del cliente no es valido");
+		
+		// Verify CIF format
+		if (!Input.isCifValid(client.getCif()))
+			throw new IllegalArgumentException("El CIF introducido no tiene un formato valido");
+		
+		// Uncovered cannot be negative
+		if (client.getUncovered() < 0)
+			throw new IllegalArgumentException("El descubierto no puede ser negativo");
+		
+		// Check for duplicated CIF
+		if (Database.clients.selectByCif(client.getCif()) != null)
+			throw new IllegalArgumentException("Ya existe un cliente en la base de datos con ese CIF");
+		
+		// Add to database
+		Database.clients.insert(client);
 	}
 }

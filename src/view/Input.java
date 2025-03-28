@@ -14,10 +14,10 @@ public class Input {
 	}
 	
 	// TODO: Properly validate first and last letter
-	private static boolean isCifValid(String cif) {
+	public static boolean isCifValid(String cif) {
 		final String validLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-		if (cif.length() != 9)
+		if (cif == null || cif.length() != 9)
 			return false;
 		
 		// Check first letter
@@ -44,6 +44,13 @@ public class Input {
 			return false;
 		
 		return true;
+	}
+	
+	public static boolean isEmailValid(String email) {
+		if (email == null)
+			return false;
+
+		return email.contains("@");
 	}
 
     public static int readOption(int min, int max) {
@@ -237,23 +244,13 @@ public class Input {
 	}
 
 	public static String readEmail(String msg) {
-		String email = "";
-		boolean isValid = false;
+		System.out.print(msg);
+		String email = readLine();
 
-		while (!isValid) {
-			try {
-				System.out.print(msg);
-				email = readLine();
-				if (email.length() == 0)
-					throw new NumberFormatException("Email is blank");
-				if (!email.contains("@"))
-					throw new NumberFormatException("Email does not contain '@'");
-				
-				isValid = true;
-			}
-			catch (NumberFormatException e) {
-				System.out.println("El correo electronico introducido no es valido");
-			}
+		while (!isEmailValid(email)) {
+			System.out.println("El correo electronico introducido no es valido");
+			System.out.print(msg);
+			email = readLine();
 		}
 
 		return email;

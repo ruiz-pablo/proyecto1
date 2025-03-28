@@ -50,7 +50,6 @@ public class BillController extends AbstractController {
 		}
 	}
 
-
 	@Override
 	public void remove() {
 		// Do not implement, it is not going to be used
@@ -65,11 +64,16 @@ public class BillController extends AbstractController {
 		// User confirmation
 		if (!Input.readYesNo("¿Marca factura como pagada? (s/n): ")) {
 			System.out.println("Cancelando...");
+			return;
 		}
-		else {
-			markBillAsPaid(bill.getId()); // Mark as paid
-			decreaseUncovered(bill.getClientId(), bill.getAmount()); // Decrease client's uncovered
+
+		// Mark as paid
+		try {
+			markBillAsPaid(bill.getId());
 			System.out.println("Se ha marcado la factura como pagada");
+		} catch (IllegalArgumentException e){
+			System.out.println("No se pudo marcar la factura como pagada");
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -139,8 +143,15 @@ public class BillController extends AbstractController {
 	private void markBillAsPaid(int billId) {
 		// Mark bill as paid
 		Bill bill = Database.bills.select(billId);
+		
+		if (bill == null)
+			throw new IllegalArgumentException("No existe la factura introducida");
+
 		bill.setPaid(true);
 		Database.bills.update(bill);
+
+		// Decrease client's uncovered
+		decreaseUncovered(bill.getClientId(), bill.getAmount());
 	}
 
 	private void increaseUncovered(int clientId, int amount) {
