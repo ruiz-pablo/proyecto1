@@ -82,6 +82,22 @@ public class BillController extends AbstractController {
 	/******************/
 
 	public int createBillFromProductMap(Client client, HashMap<Integer, Integer> productMap) {
+		// Test clients exits
+		if (client == null || productMap == null)
+			throw new IllegalArgumentException("Null parameter not valid");
+		if (!Database.clients.exists(client.getId()))
+			throw new IllegalArgumentException("Client not found");
+		
+		// Test products and amounts
+		for (Integer productId : productMap.keySet()) {
+			if (!Database.products.exists(productId))
+				throw new IllegalArgumentException("Product not found");
+			if (productMap.get(productId) <= 0)
+				throw new IllegalArgumentException("Product amount not valid");
+			if (productMap.get(productId) > Database.products.select(productId).getStock())
+				throw new IllegalArgumentException("Not enough stock available");
+		}
+
 		// Create bill
 		Bill bill = new Bill(
 				client.getId(), // Id of the client
@@ -106,6 +122,13 @@ public class BillController extends AbstractController {
 		// Insert SoldProduct objects into database
 		for (SoldProduct p : soldProducts)
 			Database.soldProducts.insert(p);
+		
+		// Decrease stock
+		for (SoldProduct p : soldProducts) {
+			Product product = Database.products.select(p.getProductId());
+			product.setStock(product.getStock() - p.getAmount());
+			Database.products.update(product);
+		}
 		
 		// Update total amount of the bill
 		int amount = calculateBillAmount(billId);

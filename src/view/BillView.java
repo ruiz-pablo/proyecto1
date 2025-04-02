@@ -149,16 +149,6 @@ public class BillView {
 	}
 
 	private void addProductToList(HashMap<Integer, Integer> productsMap, int productId, int amount) {
-		// Calculate new stock value
-		Product product = Database.products.select(productId);
-		int newStock = product.getStock() - amount;
-		if (newStock < 0)
-			throw new IllegalStateException("Tried to decrease stock unted 0 for product id " + productId);
-		
-		// Update database
-		product.setStock(newStock);
-		Database.products.update(product);
-
 		// Create product if it is not in the map
 		if (productsMap.get(Integer.valueOf(productId)) == null)
 			productsMap.put(Integer.valueOf(productId), Integer.valueOf(amount));
