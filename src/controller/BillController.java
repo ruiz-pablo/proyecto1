@@ -173,11 +173,15 @@ public class BillController extends AbstractController {
 		if (bill == null)
 			throw new IllegalArgumentException("No existe la factura introducida");
 
-		bill.setPaid(true);
-		Database.bills.update(bill);
+		// Only update if the bill wasn't paid
+		if (!bill.isPaid()) {
+			// Update database
+			bill.setPaid(true);
+			Database.bills.update(bill);
 
-		// Decrease client's uncovered
-		decreaseUncovered(bill.getClientId(), bill.getAmount());
+			// Decrease client's uncovered
+			decreaseUncovered(bill.getClientId(), bill.getAmount());
+		}
 	}
 
 	private void increaseUncovered(int clientId, int amount) {
