@@ -1,11 +1,10 @@
 package test;
 
-import static org.junit.Assert.*;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,28 +13,42 @@ import org.junit.runners.Parameterized.Parameters;
 
 import controller.BillController;
 import model.Client;
+import model.Bill;
 import model.Product;
 import model.database.Database;
 
 @RunWith(Parameterized.class)
 public class AddBillTest {
-	private Client client;
-	private int[][] productData;
+	
+	private int clientId;
 	private int expectedBillAmount;
 	private int expectedUncovered;
+	private boolean markPaid;
 
-	public AddBillTest(Client client,
-			int[][] productData,
+	private int[] productIds;
+	private int[] productAmounts;
+	private int[] productStocks;
+
+	public AddBillTest(
+			int clientId,
 			int expectedBillAmount,
-			int expectedUncovered
-			) {
-
-		this.client = client;
-		this.productData = productData;
-		this.expectedBillAmount  = expectedBillAmount;
-		this.expectedUncovered  = expectedUncovered;
+			int expectedUncovered,
+			boolean markPaid,
+			int[] productIds,
+			int[] productAmounts,
+			int[] productStocks
+		) {
+		
+		this.clientId = clientId;
+		this.expectedBillAmount = expectedBillAmount;
+		this.expectedUncovered = expectedUncovered;
+		this.markPaid = markPaid;
+		this.productIds = productIds;
+		this.productAmounts = productAmounts;
+		this.productStocks = productStocks;
 	}
 
+	// This data will be inserted in the database and will be uses in the test below
 	@Before
 	public void setUp() throws Exception {
 		// Products
@@ -51,7 +64,7 @@ public class AddBillTest {
 		Database.products.insert(new Product(10, "Auriculares Inalámbricos", "Es un producto muy asequible y de alta calidad", 600, 10, 0));
 		
 		// Clients
-		Database.clients.insert(new Client(1, "Juan Pérez", "A1231231A", "juan@example.com", "Calle 1", 100, true));
+		Database.clients.insert(new Client(1, "Juan Pérez", "A1231231A", "juan@example.com", "Calle 1", 0, true));
 		Database.clients.insert(new Client(2, "María García", "B9876543B", "maria@example.com", "Avenida 2", 200, true));
 		Database.clients.insert(new Client(3, "Pedro Martínez", "C4567890C", "pedro@example.com", "Calle 3", 50, true));
 		Database.clients.insert(new Client(4, "Ana López", "D2345678D", "ana@example.com", "Plaza 4", 150, true));
@@ -65,46 +78,82 @@ public class AddBillTest {
 	
 	@Parameters
 	public static Collection<Object[]> parameters (){
-		return Arrays.asList(new Object[][]{
+		return Arrays.asList(new Object[][] {
 			{
-				1,
-				new int[][] {
-					{2, 1, 9},
-					{6, 5, 4},
-					{9, 3, 1},
-				},
-				999,
-				999
+				1,             // Client Id
+				4464,          // expectedBillAmount
+				4464,          // expectedUncovered
+				false,         // Mark as paid
+				new int[] {1}, // Products IDs
+				new int[] {3}, // Products amount
+				new int[] {2}, // Products expected stock
 			},
+
 			{
 				1,
-				new int[][] {
-					{2, 1, 9},
-					{6, 5, 4},
-					{9, 3, 1},
-				},
-				999,
-				999
+				21386,
+				4464,
+				true,
+				new int[] {2, 6, 9},
+				new int[] {1, 5, 3},
+				new int[] {9, 4, 1},
+			},
+
+			{
+				6,
+				16775,
+				300,
+				true,
+				new int[] {4, 5, 8},
+				new int[] {5, 3, 7},
+				new int[] {7, 3, 4},
+			},
+
+			{
+				6,
+				9592,
+				9892,
+				false,
+				new int[] {1, 2, 8, 9},
+				new int[] {2, 1, 4, 1},
+				new int[] {0, 8, 0, 0},
 			},
 		});
 	}
 
 	@Test
 	public void testCreateBillFromProductMap() {
-		BillController controller = new BillController();
-		
-		// Create productMap from productData
+		// Create HashMap of productId - Amount
 		HashMap<Integer, Integer> productMap = new HashMap<Integer, Integer>();
-		for (int[] row : productData) {
-			int productId     = row[0];
-			int amount        = row[1];
-			int expectedStock = row[2];
-			
-			productMap.put(Integer.valueOf(productId), Integer.valueOf(amount));
-			
+		for (int i = 0; i < productIds.length; i++) {
+			productMap.put(productIds[i], productAmounts[i]);
 		}
-
-		controller.createBillFromProductMap(Database.clients.select(1), null);
+		
+		// Get client from database
+		Client client = Database.clients.select(clientId);
+		
+		// Create bill
+		BillController controller = new BillController();
+		int billId = controller.createBillFromProductMap(client, productMap, markPaid);
+		
+		// Update client's data (uncovered value should have changed)
+		client = Database.clients.select(clientId);
+		
+		// Make sure bill exists
+		Assert.assertTrue(Database.bills.exists(billId));
+		Bill bill = Database.bills.select(billId);
+		
+		// Make sure bill data is correct
+		Assert.assertEquals(clientId, bill.getClientId());
+		Assert.assertEquals(expectedBillAmount, bill.getAmount());
+		Assert.assertEquals(markPaid, bill.isPaid());
+		
+		// Make sure uncovered is updated correctly
+		Assert.assertEquals(expectedUncovered, client.getUncovered());
+		
+		// Make sure stock is updated
+		for (int i = 0; i < productIds.length; i++) {
+			Assert.assertEquals(productStocks[i], Database.products.select(productIds[i]).getStock());
+		}
 	}
-
 }
