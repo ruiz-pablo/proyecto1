@@ -39,7 +39,7 @@ public class BillController extends AbstractController {
 			boolean printBill = (boolean) values[2];
 			
 			// Create bill
-			int billId = createBillFromProductMap(client, productMap);
+			int billId = createBillFromProductMap(client, productMap, false);
 			
 			// Print bill
 			if (printBill)
@@ -81,12 +81,14 @@ public class BillController extends AbstractController {
 	/* Helper Methods */
 	/******************/
 
-	public int createBillFromProductMap(Client client, HashMap<Integer, Integer> productMap) {
+	public int createBillFromProductMap(Client client, HashMap<Integer, Integer> productMap, boolean markPaid) {
 		// Test clients exits
 		if (client == null || productMap == null)
 			throw new IllegalArgumentException("Null parameter not valid");
 		if (!Database.clients.exists(client.getId()))
 			throw new IllegalArgumentException("Client not found");
+		if (productMap.size() == 0)
+			throw new IllegalArgumentException("No products where provided");
 		
 		// Test products and amounts
 		for (Integer productId : productMap.keySet()) {
@@ -102,7 +104,7 @@ public class BillController extends AbstractController {
 		Bill bill = new Bill(
 				client.getId(), // Id of the client
 				0,              // Set amount temporally to 0, it will be updated later
-				false           // Set paid to false by default
+				markPaid        // Set paid or unpaid
 				);
 		
 		int billId = Database.bills.insert(bill); // Insert bill into table to get Id
@@ -135,8 +137,9 @@ public class BillController extends AbstractController {
 		bill.setAmount(amount);
 		Database.bills.update(bill);
 		
-		// Increase client's uncovered
-		increaseUncovered(client.getId(), billId);
+		// Increase client's uncovered only if the bill has not been paid
+		if (!markPaid)
+			increaseUncovered(client.getId(), amount);
 
 		return bill.getId();
 	}
@@ -153,7 +156,7 @@ public class BillController extends AbstractController {
 			Product product = Database.products.select(soldProduct.getProductId());
 			
 			importe += product.getPrice() * soldProduct.getAmount();
-			iva += (int) Math.round((importe * product.getIva()) / 100.0);
+			iva += (int) Math.round((product.getPrice() * soldProduct.getAmount() * product.getIva()) / 100.0);
 		}
 		
 		// Calculate up RE quote
@@ -182,12 +185,15 @@ public class BillController extends AbstractController {
 		int newUncovered = client.getUncovered();
 		newUncovered += amount;
 		client.setUncovered(newUncovered);
+		Database.clients.update(client);
 	}
 
+	// TODO: Remove if not used?
 	private void decreaseUncovered(int clientId, int amount) {
 		Client client = Database.clients.select(clientId);
 		int newUncovered = client.getUncovered();
 		newUncovered -= amount;
 		client.setUncovered(newUncovered);
+		Database.clients.update(client);
 	}
 }
