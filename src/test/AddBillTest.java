@@ -79,6 +79,7 @@ public class AddBillTest {
 	@Parameters
 	public static Collection<Object[]> parameters (){
 		return Arrays.asList(new Object[][] {
+			// Test 1
 			{
 				1,             // Client Id
 				4464,          // expectedBillAmount
@@ -89,6 +90,7 @@ public class AddBillTest {
 				new int[] {2}, // Products expected stock
 			},
 
+			// Test 2
 			{
 				1,
 				21386,
@@ -99,6 +101,7 @@ public class AddBillTest {
 				new int[] {9, 4, 1},
 			},
 
+			// Test 3
 			{
 				6,
 				16775,
@@ -109,6 +112,7 @@ public class AddBillTest {
 				new int[] {7, 3, 4},
 			},
 
+			// Test 4
 			{
 				6,
 				9592,
