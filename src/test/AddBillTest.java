@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -49,8 +49,9 @@ public class AddBillTest {
 	}
 
 	// This data will be inserted in the database and will be uses in the test below
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUp() throws Exception {
+		System.out.println("Before class");
 		// Products
 		Database.products.insert(new Product(1, "SmartWatch", "Es un reloj inteligente de alta calidad", 1200, 21, 5));
 		Database.products.insert(new Product(2, "Café Espresso", "Es un café de alta calidad y sabor intenso", 500, 10, 10));
