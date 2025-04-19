@@ -33,11 +33,20 @@ public class AbstractDatabaseTable<T extends DatabaseEntity<T>> {
 		if (entity == null)
 			throw new IllegalArgumentException("entity is null");
 		
+		// Use the given id if set
+		int newId = entity.getId();
+		
+		// Otherwise generate a new one
+		if (newId == 0)
+			newId = newId();
+		
+		if (exists(newId))
+			throw new IllegalArgumentException("Duplicated row ID");
+		
 		T clone = getClone(entity);
-		int id = newId();
-		clone.setId(id);
+		clone.setId(newId);
 		data.add(clone);
-		return id;
+		return newId;
 	}
 	
 	public T select(int id) {
