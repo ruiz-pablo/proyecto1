@@ -1,0 +1,8 @@
++-----------+---------------------------------+----------------------------------------------+-----------------------------------------+---------------------+
+| Encargado | Caso de prueba                  | Clases                                       | Documentacion                           | Terminado           |
++-----------+---------------------------------+----------------------------------------------+-----------------------------------------+---------------------+
+| Pablo     | Creacion facturas               | test.AddBillTest                             | testing_creacion_facturas.pdf           | Si                  |
+| Diego     | Creacion facturas (Excepciones) | test.AddBillTestException                    | testing_creacion_facturas_exception.pdf | Si                  |
+| Juanjo    | Creacion clientes               | test.AddClientTest test.AddBillTestException | testing_creacion_cliente.pdf            | Falta documentacion |
+| Lucas     | Marcar factura como pagada      | test.PayBillTest test.PayBillTestException   | No adjunta                              | No                  |
++-----------+---------------------------------+----------------------------------------------+-----------------------------------------+---------------------+
